@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>我要查询</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/receive.css" />
+</head>
+<body>
+<div class="container">
+    <div class="weui-mask" id="iosMask" style="display: none"></div>
+    <div class="list">
+        <div class="item item-input-inset" style="width: 100%">
+            <label class="item-input-wrapper">
+                快递公司 <select id="deliveryCom"></select>
+            </label>
+            <img id="scan" style="width: 24px;float: right;position: relative;top: 7px;right: 36px" src="../assets/images/code1.jpg" alt="">
+        </div>
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                快递单号
+                <input type="number" placeholder="请输入快递单号" id="deliveryNo">
+            </label>
+            <div style="display: inline-block;width: 24%;text-align: right">
+                <span class="button-small" onclick="check()">
+                查询
+            </span>
+            </div>
+        </div>
+    </div>
+    <iframe style="width: 98%;margin-left: 1%" src="" id="iframe" frameborder="0"></iframe>
+</div>
+    <div id="back" onclick="window.location.href='../homePage/homePageHtml'">返回</div>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script type="text/javascript" src="../assets/js/homePage/check.js"></script>
+</body>
+</html>

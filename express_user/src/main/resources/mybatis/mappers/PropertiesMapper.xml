@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mappers.PropertiesMapper">
+
+    <select id="generateStoreSalesNumber" parameterType="java.util.HashMap" statementType="CALLABLE">
+        <![CDATA[
+           {
+           call generate_store_sales_number (
+            #{result,mode=OUT,jdbcType=BIGINT}
+            )
+           }
+       ]]>
+    </select>
+
+    <select id="generateStoreSuplierNumber" parameterType="java.util.HashMap" statementType="CALLABLE">
+        <![CDATA[
+           {
+           call generate_store_sales_number (
+            #{result,mode=OUT,jdbcType=BIGINT}
+            )
+           }
+       ]]>
+    </select>
+
+    <select id="generateSendOrderNumber" parameterType="java.util.HashMap" statementType="CALLABLE">
+        <![CDATA[
+           {
+           call generate_send_order_number (
+            #{result,mode=OUT,jdbcType=BIGINT}
+            )
+           }
+       ]]>
+    </select>
+
+
+</mapper>

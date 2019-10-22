@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>express</artifactId>
+        <groupId>com.express</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>express_3part</artifactId>
+    <!--<packaging>war</packaging>-->
+    <name>express_3part Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+    <build>
+        <finalName>express_3part</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>install-external</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${project.basedir}/jars/CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>cn.com.guju</groupId>
+                            <artifactId>CCP_REST_SMS_SDK_JAVA_v2.6.3r</artifactId>
+                            <version>2.6.3</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>install-external2</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${project.basedir}/jars/alipay-sdk-java20161213173952.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>com.alipay.api</groupId>
+                            <artifactId>alipay_api</artifactId>
+                            <version>1.0</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

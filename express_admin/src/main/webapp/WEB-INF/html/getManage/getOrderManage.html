@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>收件订单</title>
+    <link rel="stylesheet" href="../assets/layui/frame/layui/css/layui.css">
+    <link rel="stylesheet" href="../assets/layui/frame/static/css/style.css">
+    <link rel="icon" href="../assets/layui/frame/static/image/code.png">
+</head>
+<style type="text/css">
+    .info-span {
+        display: inline-block;
+        width: 10%;
+    }
+</style>
+<body class="body">
+
+<p class="layui-elem-quote">当前位置：收件订单列表</p>
+<p class="layui-elem-quote" style="border-left: 0">
+    <span class="info-span">订单数：<span class="blue-text" id="totalQty"></span>件</span>
+    <span class="info-span">派件上门：<span class="blue-text" id="todoorQty"></span>件</span>
+    <span class="info-span">上门费：<span class="blue-text" id="todoorFeeTotal"></span>元</span>
+    <span class="info-span">自行取件：<span class="blue-text" id="receiveQty"></span>件</span>
+</p>
+<!-- 工具集 -->
+<div class="my-btn-box">
+    <span class="fl">
+
+    </span>
+    <span class="fr">
+        <form class="layui-form" action="">
+            <label class="layui-form-label">所属网点：</label>
+            <div class="layui-input-inline">
+                <select id="schoolId" name="modules" lay-verify="required:false" lay-search="">
+
+                </select>
+            </div>
+
+            <span class="layui-form-label">订单号：</span>
+            <div class="layui-input-inline">
+               <input type="number" id="orderNo" autocomplete="off" placeholder="请输入订单号" class="layui-input">
+            </div>
+
+            <span class="layui-form-label">用户名：</span>
+            <div class="layui-input-inline">
+                <input type="text" id="userCode" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+            </div>
+            <span class="layui-form-label">手机号：</span>
+            <div class="layui-input-inline" style="width: 170px;">
+               <input type="number" id="userMobile" autocomplete="off" placeholder="请输入手机号" class="layui-input">
+            </div>
+            <label class="layui-form-label">派送方式：</label>
+            <div class="layui-input-inline" style="width: 170px;">
+                <select id="typeName" name="modules" lay-verify="required:false" lay-search="">
+                  <option value=""></option>
+                  <option value="自行取件">自行取件</option>
+                  <option value="派件上门">派件上门</option>
+                </select>
+            </div>
+            <label class="layui-form-label">是否删除：</label>
+            <div class="layui-input-inline" style="width: 152px;">
+                <select id="isDelete" name="modules" lay-verify="required:false" lay-search="">
+                <option value=""></option>
+                <option value="已删除">已删除</option>
+                <option value="未删除">未删除</option>
+                </select>
+            </div>
+
+            <!--<button style="visibility: hidden" class="layui-btn mgl-20">搜索</button>-->
+            <!--<button style="visibility: hidden" class="layui-btn layui-btn-warm mgl-20">导出</button>-->
+            <!--<button style="visibility: hidden" class="layui-btn layui-btn-normal mgl-20">重置</button>-->
+        </form>
+    </span>
+</div>
+<div class="my-btn-box">
+    <span class="fr">
+        <form class="layui-form" action="">
+
+            <label class="layui-form-label">订单状态：</label>
+            <div class="layui-input-inline">
+                <select id="orderStatus" name="modules" lay-verify="required:false" lay-search="">
+                  <option value=""></option>
+                  <option id="1" value="未到达">未到达</option>
+                  <option id="2" value="已到达">已到达</option>
+                  <option id="3" value="待接单">待接单</option>
+                  <option id="4" value="已接单">已接单</option>
+                  <option id="5" value="待签收">待签收</option>
+                  <option id="6" value="已签收">已签收</option>
+                  <option id="7" value="已拒收">已拒收</option>
+                  <option id="8" value="已退回">已退回</option>
+                </select>
+            </div>
+
+            <span class="layui-form-label">快递单号：</span>
+            <div class="layui-input-inline">
+               <input type="number" id="deliveryNo" autocomplete="off" placeholder="快递单号" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">上门人员：</label>
+            <div class="layui-input-inline">
+                <select id="delivererId" name="modules" lay-verify="required:false" lay-search="">
+                </select>
+            </div>
+            <label class="layui-form-label">到达日期：</label>
+            <div class="layui-input-inline" style="width: 170px;">
+              <input type="text" class="layui-input" id="getDateRange" placeholder="请选择日期">
+            </div>
+            <label class="layui-form-label">签收日期：</label>
+            <div class="layui-input-inline" style="width: 170px;">
+              <input type="text" class="layui-input" id="receiveDateRange" placeholder="请选择日期">
+            </div>
+
+            <button class="layui-btn mgl-20" lay-submit="" lay-filter="formDemo">搜索</button>
+            <button class="layui-btn layui-btn-warm mgl-20" lay-submit="" lay-filter="formExport">导出</button>
+            <button class="layui-btn layui-btn-normal mgl-20">重置</button>
+            <!--<button class="layui-btn layui-btn-warm mgl-20">导出</button>-->
+        </form>
+    </span>
+</div>
+
+<!-- 表格 -->
+<table class="layui-table" id="dateTable" lay-filter="dateTable"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="smry">上门人员</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="mdzp">面单照片</a>
+</script>
+
+<script type="text/javascript" src="../assets/layui/frame/layui/layui.js"></script>
+<script type="text/javascript" src="../assets/layui/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="../assets/layui/js/index.js"></script>
+<script type="text/javascript" src="../assets/js/getManage/getOrderManage.js"></script>
+
+
+
+</body>
+</html>

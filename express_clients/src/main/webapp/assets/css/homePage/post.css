@@ -1,0 +1,187 @@
+body{
+    background-color: #f6f6f6;
+    color: #666;
+}
+.list {
+    margin-bottom: 4rem;
+}
+
+.list_title{
+    font-size: 14px;
+    color: #0ab5fa;
+    padding: 0 12px;
+    height: 35px;
+    line-height: 35px;
+}
+.list_type{
+    background-color: #ffffff;
+    padding: 0 12px;
+    height: 43px;
+    line-height: 43px;
+    margin-bottom: 5px;
+}
+.post_list{
+    border-top: 1px solid #f6f6f6;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.weui-dialog__ft{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 5px 0;
+}
+#sure{
+    color: #fff;
+    border-radius: 8px;
+    background-color: #0ab5fa;
+    width: 92%;
+    margin-left: 4%;
+    text-align: center;
+}
+.postAddress{
+    background-color: #ffffff;
+    padding: 0 12px;
+    margin-bottom: 4px;
+}
+
+.mt4 {
+    margin-top: 4px;
+}
+
+.add-address {
+    border-top: 1px solid #f6f6f6;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+
+}
+
+.add-address img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+
+.select-choice {
+    float: right;
+    height: 43px;
+    border: 0;
+    outline: 0;
+    /*text-align-last: right;*/
+}
+
+/*.select-choice option {*/
+    /*direction: rtl;*/
+/*}*/
+
+
+.select-wrap {
+    border-bottom: 1px solid #f6f6f6;
+    margin-top: -1px;
+}
+
+.mt-5 {
+    margin-top: -5px;
+}
+
+.tips {
+    padding: 0 12px;
+    background-color: #fff;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.tips-textarea {
+    display: block;
+    height: 100px;
+    border: 1px solid #ccc;
+    width: 98%;
+    border-radius: 5px;
+    margin: 6px auto;
+    resize: none;
+    outline: none;
+    padding: 5px;
+}
+.mt_confirm a{
+    padding: 8px 50px;
+    background-color: #0ab5fa;
+    border-radius: 7px;
+    color: #ffffff;
+}
+
+.modal-address-list,.modal-address-list1 {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    display: none;
+    background-color:#f6f6f6;
+}
+
+.list_container_body{
+    line-height: 30px;
+    padding: 8px 12px;
+    background-color: #fff;
+}
+#list{
+    font-size: 13px;
+    color: #666;
+}
+.list_container_body span{
+    font-size: 13px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.add-address-list,.add-address-list1 {
+    position: fixed;
+    bottom: 10px;
+    left: 4%;
+    width: 92%;
+    height: 3.1rem;
+    line-height: 3.1rem;
+    text-align: center;
+    color: #fff;
+    background-color: #2aade5;
+    border-radius: 6px;
+
+}
+
+.more-address {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    display: none;
+    background-color:#f6f6f6;
+}
+
+/*新增模态窗里面的新增地址*/
+
+.weui-cell{
+    padding: 15px;
+}
+.weui-cell__bd{
+    font-size: 14px;
+}
+.picker .picker-panel .wheel-wrapper .wheel .wheel-scroll .wheel-item{
+    font-size: 14px !important;
+}
+.picker-title{
+    font-size: 16px !important;
+}
+.layui-layer-loading{
+    left: calc(50vw - 16px) !important;
+    top: calc(50vh - 16px) !important;
+}
+
+.picker {
+    z-index: 9999 !important;
+}
+

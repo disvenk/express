@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--指定使用LOG4J来输出，如果这里不指定，不少应用服务器的classpath中已经包含Commons Logging，如Tomcat和WebShpere，-->
+    <!--所以MyBatis会把它作为具体的日志实现。记住这点非常重要。这将意味着，在诸如 WebSphere的环境中——WebSphere提供了-->
+    <!--Commons Logging的私有实现，你的Log4J配置将被忽略。 这种做法不免让人悲催。-->
+    <!--注意:Mybatis中SQL语 句的日志级别被设为DEBUG-->
+    <settings>
+       <!-- &lt;!&ndash;lazyLoadingEnabled:延迟加载启用(懒加载)，默认是false&ndash;&gt;
+        <setting name="lazyLoadingEnabled" value="true"/>
+        &lt;!&ndash;积极的懒加载，false是按需加载&ndash;&gt;
+        <setting name="aggressiveLazyLoading" value="false"/>
+        &lt;!&ndash;开启全局二级缓存&ndash;&gt;
+        <setting name="cacheEabled" value="true"/>-->
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <!--<typeHandlers>-->
+        <!--<typeHandler handler="com.xxx.core.persist.respository.mybatis.handler.EnumTypeHandler" javaType="com.xxx.model.enumeration.Status"/>-->
+        <!--<typeHandler handler="com.xxx.core.persist.respository.mybatis.handler.EnumTypeHandler" javaType="com.xxx.model.enumeration.Sex"/>-->
+    <!--</typeHandlers>-->
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+            <!-- 该参数默认为false -->
+            <!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->
+            <!-- 和startPage中的pageNum效果一样-->
+            <property name="offsetAsPageNum" value="true"/>
+            <!-- 该参数默认为false -->
+            <!-- 设置为true时，使用RowBounds分页会进行count查询 -->
+            <property name="rowBoundsWithCount" value="true"/>
+            <!-- 设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果 -->
+            <!-- （相当于没有执行分页查询，但是返回结果仍然是Page类型）-->
+            <property name="pageSizeZero" value="true"/>
+            <!-- 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 -->
+            <!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
+            <property name="reasonable" value="false"/>
+            <!-- 增加了一个`params`参数来配置参数映射，用于从Map或ServletRequest中取值 -->
+            <!-- 可以配置pageNum,pageSize,count,pageSizeZero,reasonable,orderBy,不配置映射的用默认值 -->
+            <!-- 不理解该含义的前提下，不要随便复制该配置 -->
+            <property name="params" value="pageNum=start;pageSize=limit;"/>
+            <!-- 支持通过Mapper接口参数来传递分页参数 -->
+            <property name="supportMethodsArguments" value="true"/>
+
+            <property name="autoRuntimeDialect" value="false"/>
+            <property name="closeConn" value="true"/>
+        </plugin>
+    </plugins>
+</configuration>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mappers.UserHomeMapper">
+
+    <select id="findHomeInfo" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT
+        eu.id
+        ,(Select COUNT(1) From exp_notice_message_log nm Where nm.user_id = eu.id  And nm.notice_checked = 0) noticeMessageCount
+        ,(Select COUNT(1) From exp_send_order so Where so.user_id = eu.id And so.order_status &lt; 3 And so.logicDeleted = 0 ) sendOrderCount
+        ,(Select COUNT(1) From exp_receiver_order ro Where ro.user_id = eu.id  And ro.order_status &lt;= 5 And ro.logicDeleted = 0) receiverOrderCount
+    FROM exp_user eu
+    WHERE eu.id = #{userId}
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/express.iml" filepath="$PROJECT_DIR$/express.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_3part/express_3part.iml" filepath="$PROJECT_DIR$/express_3part/express_3part.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_admin/express_admin.iml" filepath="$PROJECT_DIR$/express_admin/express_admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_clients/express_clients.iml" filepath="$PROJECT_DIR$/express_clients/express_clients.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_core/express_core.iml" filepath="$PROJECT_DIR$/express_core/express_core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_merchant/express_merchant.iml" filepath="$PROJECT_DIR$/express_merchant/express_merchant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_model/express_model.iml" filepath="$PROJECT_DIR$/express_model/express_model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_pay/express_pay.iml" filepath="$PROJECT_DIR$/express_pay/express_pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_user/express_user.iml" filepath="$PROJECT_DIR$/express_user/express_user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/express_utils/express_utils.iml" filepath="$PROJECT_DIR$/express_utils/express_utils.iml" />
+    </modules>
+  </component>
+</project>

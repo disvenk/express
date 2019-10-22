@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>角色列表</title>
+		<meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../assets/css/ace.min.css" id="main-ace-style" />
+		<link rel="stylesheet" href="../assets/layui/frame/layui/css/layui.css">
+		<link rel="stylesheet" href="../assets/css/common/common.css" />
+		<link rel="stylesheet" href="../assets/css/permissionManage/roleManage.css"/>
+        <link rel="stylesheet" href="../assets/css/common/infoTable.css" />
+		<link rel="stylesheet" href="../assets/ztree/zTreeStyle.css" />
+	</head>
+	<style type="text/css">
+		.table {
+			margin-bottom: 100px !important;
+		}
+		.necessary-mark {
+			color: red;
+			padding-right: 6px;
+		}
+	</style>
+	<body class="no-skin">
+	<!--loading flash-->
+	<div class="spinner">
+		<div class="rect1"></div>
+		<div class="rect2"></div>
+		<div class="rect3"></div>
+		<div class="rect4"></div>
+		<div class="rect5"></div>
+	</div>
+
+	<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<div class="main-content">
+				<div class="page-content">
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="row">
+							<div class="col-xs-12">
+
+								<!-- PAGE CONTENT BEGINS -->
+
+								<p class="layui-elem-quote">当前位置：角色列表</p>
+								<ul class="admin-operate-items clearfix">
+									<li class="admin-operate-item w0">
+										<!--<button id="addCategory" class="admin-btn w96">新增角色</button>-->
+										<button id="addCategory" class="layui-btn" id="courierAdd">新增角色</button>
+									</li>
+									<li class="admin-operate-item w1"></li>
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="order-topic center" style="width: 30%;">角色名称</th>
+										<th class="order-topic center" style="width: 50%;">角色描述</th>
+                                        <th class="order-topic center" style="min-width: 200px">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                    </tbody>
+                                </table>
+
+								</ul>  <!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+		</div><!-- /.main-container -->
+
+
+	<!--删除摸态窗-->
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabe2">确认</h4>
+				</div>
+				<div class="modal-body">
+					<span>您确认要删除该角色吗？</span>
+				</div>
+				<div class="modal-footer">
+					<!--<button type="button" class="btn btn-primary sure">确认</button>-->
+					<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+					<div class="sure" id="delSure">确认</div>
+					<div data-dismiss="modal" style="color: #0e90d2">取消</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!--增加角色摸态窗-->
+    <div class="modal fade" id="approveModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="approveModalLabel">新增角色</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                    <span class="modal-left">
+                        <span class="necessary-mark">*</span>角色名称：
+                    </span>
+                        <span class="modal-right"><input class="modal-right-input" id="name" type="text"></span>
+                    </div>
+					<div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        角色描述：
+                    </span>
+						<span class="modal-right"><input class="modal-right-input" id="desc" type="text"></span>
+					</div>
+					<div>
+						<span class="modal-left">
+                        <span class="necessary-mark">*</span>菜单授权：
+                    	</span>
+						<span class="modal-right">
+							<ul id="menuTree" class="ztree"></ul>
+						</span>
+					</div>
+					<div>
+						<span class="modal-left">
+                        <span class="necessary-mark">*</span>网点授权：
+                    	</span>
+						<span class="schoolTD1 modal-right">
+
+						</span>
+
+					</div>
+                </div>
+
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                    <div class="sure" id="addSure">确认</div>
+                    <div data-dismiss="modal" id="addCanel" style="color: #0e90d2">取消</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!--编辑角色摸态窗-->
+	<div class="modal fade" id="approveModal1" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="approveModalLabel1">编辑</h4>
+				</div>
+				<div class="modal-body">
+					<div>
+                    <span class="modal-left">
+                        <span class="necessary-mark">*</span>角色名称：
+                    </span>
+						<span class="modal-right"><input class="modal-right-input" id="name1" type="text"></span>
+					</div>
+					<div style="margin-top: 6px;">
+                    <span class="modal-left">
+                        角色描述：
+                    </span>
+						<span class="modal-right"><input class="modal-right-input" id="desc1" type="text"></span>
+					</div>
+					<div style="margin-top: 6px;">
+						<span class="modal-left">
+                        <span class="necessary-mark">*</span>菜单授权：
+                    	</span>
+						<span class="modal-right">
+							<ul id="menuTreeEditor" class="ztree"></ul>
+						</span>
+					</div>
+					<div>
+						<span class="modal-left">
+                        <span class="necessary-mark">*</span>网点授权：
+                    	</span>
+						<span class="schoolTD2 modal-right">
+
+						</span>
+
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<!--<button type="button" class="btn btn-primary sure">确认</button>-->
+					<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+					<div class="sure" id="editorSure">确认</div>
+					<div data-dismiss="modal" id="editorCanel" style="color: #0e90d2">取消</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--查看角色摸态窗-->
+	<div class="modal fade" id="approveModal2" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="approveModalLabel2">详情</h4>
+				</div>
+				<div class="modal-body">
+					<div>
+                    <span class="modal-left">
+                        角色名称：
+                    </span>
+						<span id="roleName" class="modal-right"></span>
+					</div>
+					<div style="margin-top: 6px;">
+                    <span class="modal-left">
+                        角色描述：
+                    </span>
+						<span id="roleDesc" class="modal-right"></span>
+					</div>
+					<div>
+						<span class="modal-left">
+                       拥有菜单：
+                    	</span>
+						<span class="modal-right">
+							<ul id="checkMenuTree" class="ztree"></ul>
+						</span>
+
+					</div>
+					<div>
+						<span class="modal-left">
+                       拥有网点：
+                    	</span>
+						<span id="haveSchool" class="modal-right">
+
+						</span>
+
+					</div>
+				</div>
+
+					<div class="modal-footer">
+						<div class="sure" data-dismiss="modal" style="width: 100%;">确认</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="../assets/layui/frame/layui/lay/modules/jquery-2.0.3.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+	<script  src="../assets/js/layer/layer.js"></script>
+	<script  src="../assets/ztree/jquery.ztree.all-3.5.js"></script>
+<script src="../assets/js/permissionManage/roleManage.js"></script>
+	<!-- 导入ztree类库 -->
+	<script type="text/javascript">
+        // 授权树初始化
+        var setting = {
+            data : {
+                key : {
+                    title : "t"
+                },
+                simpleData : {
+                    enable : true
+                }
+            },
+            check : {
+                enable : true,//让树形菜单前可以显示CheckBox
+            }
+        };
+
+        var setting1= {
+            data : {
+                key : {
+                    title : "t"
+                },
+                simpleData : {
+                    enable : true
+                }
+            }
+        };
+
+        $.ajax({
+            url : '../role/findMenuList',
+            type : 'POST',
+            dataType : 'text',
+            contentType: 'application/text; charset=utf-8',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Authorization': 'Basic ' + sessionStorage.getItem('token')
+            },
+            success : function(res) {
+                var zNodes = eval("(" + res + ")");
+                $.fn.zTree.init($("#menuTree"), setting, zNodes);
+                $.fn.zTree.init($("#menuTreeEditor"), setting, zNodes);
+                var treeObj1 = $.fn.zTree.getZTreeObj("menuTree");
+                var treeObj2= $.fn.zTree.getZTreeObj("menuTreeEditor");
+                treeObj1.expandAll(true);
+                treeObj2.expandAll(true);
+            },
+            error : function(msg) {
+                alert('树加载异常!');
+            }
+        });
+
+        $.ajax({
+            url : '../school/getAllSchoolList',
+            type : 'POST',
+            dataType : 'json',
+            contentType: 'application/json; charset=utf-8',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Authorization': 'Basic ' + sessionStorage.getItem('token')
+            },
+            data:JSON.stringify(),
+            success : function(res) {
+                $(res.data).each(function(index){
+                    //生成CheckBox
+                    var checkbox1=$("<input type='checkbox' name='schoolIds1'/>");
+                    var checkbox2=$("<input type='checkbox' name='schoolIds2'/>");
+                    checkbox1.val(this.id);
+                    checkbox2.val(this.id);
+                    if(index==0){
+                        $(".schoolTD1").append(checkbox1);
+                        $(".schoolTD1").append(this.name);
+                        $(".schoolTD1").append("&nbsp;");
+                        $(".schoolTD1").append("&nbsp;");
+
+                        $(".schoolTD2").append(checkbox2);
+                        $(".schoolTD2").append(this.name);
+                        $(".schoolTD2").append("&nbsp;");
+                        $(".schoolTD2").append("&nbsp;");
+                    }else if(index%3==0){
+                        $(".schoolTD1").append("</br>");
+                        $(".schoolTD1").append(checkbox1);
+                        $(".schoolTD1").append(this.name);
+                        $(".schoolTD1").append("&nbsp;");
+                        $(".schoolTD1").append("&nbsp;");
+
+                        $(".schoolTD2").append("</br>");
+                        $(".schoolTD2").append(checkbox2);
+                        $(".schoolTD2").append(this.name);
+                        $(".schoolTD2").append("&nbsp;");
+                        $(".schoolTD2").append("&nbsp;");
+                    }else{
+                        $(".schoolTD1").append(checkbox1);
+                        $(".schoolTD1").append(this.name);
+                        $(".schoolTD1").append("&nbsp;");
+                        $(".schoolTD1").append("&nbsp;");
+
+                        $(".schoolTD2").append(checkbox2);
+                        $(".schoolTD2").append(this.name);
+                        $(".schoolTD2").append("&nbsp;");
+                        $(".schoolTD2").append("&nbsp;");
+                    }
+
+                });
+            },
+            error : function(msg) {
+                alert('加载异常!');
+            }
+        });
+	</script>
+	</body>
+</html>

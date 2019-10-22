@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>自行寄件订单</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css//homePage/common.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/postWay2Order.css" />
+</head>
+<body>
+<div class="container">
+    <div class="weui-mask" id="iosMask" style="display: none"></div>
+    <div class="order-icon">
+        <div class="order-tip1">已下单</div>
+        <div class="order-tip2">请前往指定地点寄件，待工作人员确认后在线付款</div>
+        <div class="order-tip3" style="margin-top: 80px;">订单编号：<span id="orderNo">845415151254</span></div>
+        <div class="order-tip3">下单时间：<span id="setOrderTime">2018-01-16 11:40</span></div>
+    </div>
+    <div class="address">
+        <div class="address-topic">寄件地址</div>
+        <div class="address-info">
+            寄件人：<span id="postMan">陈志明</span><br>
+            电话：<span id="postManTel">18362768214</span><br>
+            <span>地址：</span><span id="postManAddress">苏州市虎丘区虎丘婚纱城苏州市虎丘区虎丘婚纱城苏州市虎丘区虎丘婚纱城苏州市虎丘区虎丘婚纱城</span>
+        </div>
+    </div>
+    <div class="address" style="margin-top: 5px;">
+        <div class="address-topic">收件地址</div>
+        <div class="address-info">
+            收件人：<span id="receiveMan">陈志明</span><br>
+            电话：<span id="receiveManTel">18362768214</span><br>
+            <span>地址：</span><span id="receiveManAddress">苏州市虎丘区虎丘婚纱城苏州市虎丘区虎丘婚纱城苏州市虎丘区虎丘婚纱城苏州市虎丘区虎丘婚纱城</span>
+        </div>
+    </div>
+    <div class="list_type clearfix" style="margin-top: 5px;">
+        <div class="select-wrap">
+            物品类型
+            <span class="deliver-info" id="goodsType">婚纱</span>
+        </div>
+    </div>
+    <div class="list_type clearfix mt-5">
+        <div class="select-wrap">
+            快递公司
+            <span class="deliver-info" id="deliveryCompany">顺丰</span>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script type="text/javascript" src="../assets/js/homePage/postWay2Order.js"></script>
+</body>
+</html>

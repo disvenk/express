@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <!--如果缓存中的对象存储超过指定的缓存数量的对象存储的磁盘地址-->
+    <diskStore path="java.io.tmpdir"/>
+
+    <!-- 默认cache：如果没有对应的特定区域的缓存，就使用默认缓存 -->
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU" />
+    <!--Ehcache的overflowToDisk属性用来配置当缓存存储的数据达到maxInMemory限制时是否overflow到磁盘上。如果这个属 性为true，那么要求缓存的数据必须是可序列化的，如果不是可序列化的，ehcache将在日志中打印这个错误（文档中仅指出了这点），并且调用 memoryStoreEvictionPolicy设置的策略（例如LRU）移除内存中的一个缓存元素再放入新的Element，同时触发 CacheEventListener的notifyElementEvicted方法-->
+
+    <!--
+        配置自定义缓存
+        maxElementsInMemory：缓存中允许创建的最大对象数
+        eternal：缓存中对象是否为永久的，如果是，超时设置将被忽略，对象从不过期。
+        timeToIdleSeconds：缓存数据的钝化时间，也就是在一个元素消亡之前，
+                    两次访问时间的最大时间间隔值，这只能在元素不是永久驻留时有效，
+                    如果该值是 0 就意味着元素可以停顿无穷长的时间。
+        timeToLiveSeconds：缓存数据的生存时间，也就是一个元素从构建到消亡的最大时间间隔值，
+                    这只能在元素不是永久驻留时有效，如果该值是0就意味着元素可以停顿无穷长的时间。
+        overflowToDisk：内存不足时，是否启用磁盘缓存。
+        memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。
+    -->
+    <cache name="SimplePageCachingFilter"
+           maxElementsInMemory="10000"
+           eternal="false"
+           overflowToDisk="false"
+           timeToIdleSeconds="900"
+           timeToLiveSeconds="1800"
+           memoryStoreEvictionPolicy="LFU" />
+
+</ehcache>

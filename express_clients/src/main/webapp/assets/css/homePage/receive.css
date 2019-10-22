@@ -1,0 +1,138 @@
+body{
+    font-family:Helvetica;
+    margin:0;
+    padding:0;
+    background-color: #f6f6f6;
+    overflow-x:hidden;
+    font-size: 14px;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.list{
+    background-color: #ffffff;
+    line-height: 43px;
+    padding: 0 10px;
+}
+.item-input-wrapper{
+    background-color: #ffffff;
+    font-size: 14px;
+    display: inline-block;
+    width: 70%;
+}
+.item .button-small{
+    padding: 6px 18px;
+    background-color: #0ab5fa;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 14px;
+}
+.item .button-style{
+    width: 66px;
+    height: 25px;
+    background-color: #0ab5fa;
+    border-radius: 28px;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 25px;
+}
+input{
+    font-size: 14px;
+    border: none;
+    outline: none;
+    padding: 8px 10px;
+    border-radius: 28px;
+    width: 56%;
+}
+select{
+    width: 65%;
+    font-size: 14px;
+    padding: 6px 20px;
+    background-color: #f8f8f8;
+    color: #000;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+    -webkit-appearance:none;
+    appearance:none;
+}
+#iframe{
+    width: 100%;
+    height: 387px;
+}
+#sure{
+    color: #fff;
+    border-radius: 8px;
+    background-color: #0db6fb;
+    width: 80%;
+    text-align: center;
+    margin-left: 10%;
+    font-size: 13px;
+}
+.myModal{
+    width: 240px;
+    height: 140px;
+    border-radius: 12px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    background-color: #f6f6f6;
+}
+.modal_title{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #f6f6f6;
+    box-shadow:0 0 3px #999;
+    padding: 6px;
+    text-align: center;
+    position: relative;
+    left: 90px;
+    top: -23px;
+}
+.modal_title img{
+    width: 40px;
+    height: 36px;
+    margin-top: 6px;
+}
+.modal_body{
+    padding: 0 20px;
+    text-align: center;
+    margin-top: -16px;
+}
+.modal_body_01{
+  padding: 10px 0;
+    border-top: 1px dashed #787878;
+}
+.modal_body .cn{
+    color: #010101;
+}
+.modal_body .en{
+    color: #9e9e9e;
+    font-size: 12px;
+}
+.modal_footer{
+    color: #fffffb;
+    background-color: #2aade5;
+    width: 100%;
+    padding: 7px 0;
+    text-align: center;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+#back{
+    color: #fff;
+    border-radius: 8px;
+    background-color: #0ab5fa;
+    width: 96%;
+    margin-left: 2%;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    height: 44px;
+    line-height: 44px;
+}

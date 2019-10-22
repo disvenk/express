@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="express_3part" />
+        <module name="express_admin" />
+        <module name="express_clients" />
+        <module name="express_core" />
+        <module name="express_merchant" />
+        <module name="express_model" />
+        <module name="express_pay" />
+        <module name="express_user" />
+        <module name="express_utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="express" target="1.7" />
+      <module name="express_3part" target="1.7" />
+      <module name="express_admin" target="1.8" />
+      <module name="express_clients" target="1.7" />
+      <module name="express_core" target="1.7" />
+      <module name="express_merchant" target="1.7" />
+      <module name="express_model" target="1.7" />
+      <module name="express_pay" target="1.7" />
+      <module name="express_user" target="1.7" />
+      <module name="express_utils" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

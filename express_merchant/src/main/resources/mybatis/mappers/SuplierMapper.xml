@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mappers.SuplierMapper">
+
+    <select id="findHomeInfo" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+      select
+        (select COUNT(1) from sup_order so Where produced_status = 2 and so.suplier_id = #{suplierId} and logicDeleted = 0) orderSum,b.countSum ,b.categorySum, b.avgSum
+      from (SELECT COUNT(id) countSum,COUNT(DISTINCT category_id) categorySum ,IFNULL(AVG(price),0) avgSum from sup_product WHERE suplier_id = #{suplierId} and logicDeleted = 0 and status = 1) b
+    </select>
+
+    <select id="orderCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+      SELECT COUNT(id) countSum, IFNULL(SUM(total),0) totalSum, IFNULL(AVG(total),0) avgTotal
+      from sup_order WHERE suplier_id = #{suplierId} And produced_status != 1 And logicDeleted = 0 And createdDate BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+    <!-- 工单各生产状态数量 -->
+    <select id="producedStatusCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+        Select produced_status producedStatus, COUNT(1) `count`
+        from sup_order WHERE suplier_id = #{suplierId} And order_type = #{orderType} And logicDeleted = 0
+        GROUP BY produced_status
+    </select>
+
+</mapper>

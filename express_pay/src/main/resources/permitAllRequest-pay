@@ -1,0 +1,7 @@
+/pay/union_entrance
+/weixin_pay/unify_order
+/weixin_pay/unify_order_notify
+/zhifubao_pay/unify_order
+/zhifubao_pay/unify_order_notify
+/zhifubao_pay/*
+/cash_pay/trade

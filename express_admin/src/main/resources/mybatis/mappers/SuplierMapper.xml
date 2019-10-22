@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mappers.SuplierMapper">
+
+    <select id="findHomeInfo" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+      select
+        (select COUNT(1) from sup_order so Where produced_status = 2 and so.suplier_id = #{suplierId} and logicDeleted = 0) orderSum,b.countSum ,b.categorySum, b.avgSum
+      from (SELECT COUNT(id) countSum,COUNT(DISTINCT category_id) categorySum ,IFNULL(AVG(price),0) avgSum from sup_product WHERE suplier_id = #{suplierId} and logicDeleted = 0 and status = 1) b
+    </select>
+
+    <select id="orderCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+      SELECT COUNT(id) countSum, IFNULL(SUM(total),0) totalSum, IFNULL(AVG(total),0) avgTotal
+      from sup_order WHERE suplier_id = #{suplierId} And produced_status != 1 And logicDeleted = 0 And createdDate BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+    <!-- 工单各生产状态数量 -->
+    <select id="producedStatusCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+        Select produced_status producedStatus, COUNT(1) `count`
+        from sup_order WHERE suplier_id = #{suplierId} And order_type = #{orderType} And logicDeleted = 0
+        GROUP BY produced_status
+    </select>
+
+    <!-- 获取寄件订单的费用(上门取件) -->
+    <select id="findSendOrderCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+       SELECT
+	count(1) todoorQty,
+	SUM(todoor_fee) todoorFeeTotal,
+	SUM(price) priceTotal,
+	SUM(cost) costTotal
+    FROM
+	`exp_send_order` eso
+    WHERE
+	type = 1 AND eso.logicDeleted = 0 AND eso.school_id IN
+        <foreach collection="schoolIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <!-- 获取寄件订单的费用(自行取件) -->
+    <select id="findSendQtyCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+       SELECT
+	count(1) todoorQty,
+	SUM(price) priceTotal,
+	SUM(cost) costTotal
+    FROM
+	`exp_send_order` eso
+    WHERE
+	type = 0 AND eso.logicDeleted = 0 AND eso.school_id IN
+        <foreach collection="schoolIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <!-- 获取收件订单的费用(派件上门)-->
+    <select id="findReceiveOrderCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+	SUM(todoor_fee) todoorFeeTotal,
+	count(1) todoorQty
+    FROM
+	`exp_receiver_order` ero
+    WHERE
+	type = 1 AND ero.logicDeleted = 0 AND ero.school_id IN
+        <foreach collection="schoolIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <!-- 获取收件订单的费用(自行取件) -->
+    <select id="findReceiveQtyCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+	count(1) todoorQty
+    FROM
+	`exp_receiver_order` ero
+    WHERE
+	type = 0 AND ero.logicDeleted = 0 AND ero.school_id IN
+        <foreach collection="schoolIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+
+    <!--获取上门人员维护的派单数-->
+    <select id="findDelivererCount" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+       SELECT
+	COUNT(1) deliverer
+    FROM
+	`exp_receiver_order` ero
+    WHERE
+	pay_status = '1' AND deliverer_id = #{delivererId}  AND ero.logicDeleted = 0 AND ero.school_id = #{schoolId}
+    </select>
+
+    <!--对账管理-->
+    <select id="findList" parameterType="java.util.HashMap" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        COUNT(*) count,
+        delivery_id,
+        school_id,
+        edc.`name` deliveryName,
+        es.`name` schoolName,
+        eso.cost cost,
+        eso.price price,
+        eso.id id,
+        DATE_FORMAT(eso.createdDate, "%Y-%m" ) time
+        FROM
+        exp_send_order eso
+        LEFT JOIN exp_delivery_company edc ON eso.delivery_id = edc.id
+        LEFT JOIN exp_school es ON eso.school_id = es.id
+        where eso.pay_status = 1 AND eso.logicDeleted = 0 AND eso.school_id IN
+        <foreach collection="schoolIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="schoolId != null and schoolId != ''"> And eso.school_id = #{schoolId} </if>
+
+        GROUP BY
+        delivery_id,
+        school_id,
+        time
+    </select>
+</mapper>

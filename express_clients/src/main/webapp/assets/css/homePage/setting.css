@@ -1,0 +1,21 @@
+body{
+    font-family:Helvetica;
+    margin:0;
+    padding:0;
+    background-color: #f6f6f6;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.weui-cell{
+    padding: 15px;
+}
+#sure{
+    color: #fff;
+    border-radius: 8px;
+    background-color: rgb(237,81,83);
+    width: 100%;
+    text-align: center;
+    margin-top: 200px;
+}

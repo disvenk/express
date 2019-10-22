@@ -1,0 +1,15 @@
+/account/login
+/account/verifyLogin
+/account/resetPassword
+/account/register
+/account/findUserPhone
+/verify/verificationCode
+/verify/checkVerificationCode
+/base/getPlaProductCategoryListAll
+/base/getPlaProductCategoryLevelOneList
+/base/getPlaProductCategoryList
+/base/getBaseDataList
+/area/findProvinceCityZone
+/express/findProvince
+/express/findCity
+/weChat/sendMessage

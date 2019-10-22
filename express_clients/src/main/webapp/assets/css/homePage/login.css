@@ -1,0 +1,95 @@
+body{
+    font-family:Helvetica;
+    margin:0;
+    padding:0;
+    overflow: hidden;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    min-height: 100vh;
+    background:#05befe; /* 一些不支持背景渐变的浏览器 */
+    background:-moz-linear-gradient(top, rgb(34,190,250), rgb(65,123,214));
+    background:-webkit-gradient(linear, 0 0, 0 bottom, from(rgb(34,190,250)), to(rgb(65,123,214)));
+    background:-o-linear-gradient(top, rgb(34,190,250), rgb(65,123,214));
+}
+.phone{
+    margin-top: 36px;
+    text-align: center;
+    position: relative;
+}
+.logo{
+    text-align: center;
+    padding-top: 60px;
+}
+.logo img{
+    width: 150px;
+}
+.phone input{
+    width: 226px;
+    font-size: 14px;
+    padding: 15px 0 16px 0;
+    border: 1px solid #3aaafc;
+    border-radius: 28px;
+    background-color: rgb(48,157,237);
+    color: rgb(183,220,248);
+    padding-left: 60px;
+    outline: none;
+    -webkit-appearance: none;
+}
+.phone input::placeholder{
+    color: #fff;
+}
+.phone div{
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    background-color: rgb(45,163,239);
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+    left: calc(50vw - 133px);
+    top: 6px;
+}
+.phone div img{
+    width: 15px;
+    margin-top: 9px;
+}
+.phone span{
+    display: inline-block;
+    position: absolute;
+    top:7px;
+    right: calc(50vw - 133px);
+    color: #ffffff;
+    width: 100px;
+    height: 33px;
+    line-height: 31px;
+    text-align: center;
+    border: 1px solid #3aaafc;
+    border-radius: 28px;
+    font-size: 13px;
+    background-color: #D9D9D9;
+}
+.login{
+    background-color: #ffffff;
+    color: #259df4;
+    font-size: 16px;
+    text-align: center;
+    width: 280px;
+    margin-left: calc(50vw - 140px);
+    border-radius: 28px;
+    height: 47px;
+    line-height: 47px;
+    margin-top: 27px;
+    font-weight: 600;
+}
+.agreement{
+    margin-top: 14px;
+    width: 86%;
+    margin-left: 8%;
+    color: rgb(183,220,248);
+    text-align: right;
+    font-size: 10px;
+}

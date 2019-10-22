@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <bean id="druidDataSourceForMybatis" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${mysql.username}"/>
+        <property name="password" value="${mysql.password}"/>
+        <property name="driverClassName" value="${mysql.driver}"/>
+
+        <!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：监控统计用的filter:stat  日志用的filter:log4j  防御SQL注入的filter:wall -->
+        <property name="filters" value="${druid.filters}"/>
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <property name="maxWait" value="${druid.maxWait}"/>
+        <property name="minIdle" value="${druid.minIdle}"/>
+
+        <!--配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒-->
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}"/>
+
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
+        <property name="testOnReturn" value="${druid.testOnReturn}"/>
+        <property name="maxOpenPreparedStatements" value="${druid.maxOpenPreparedStatements}"/>
+        <property name="removeAbandoned" value="${druid.removeAbandoned}"/>
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="${druid.removeAbandonedTimeout}"/>
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="${druid.logAbandoned}"/>
+    </bean>
+
+    <bean id="p6DataSourceForMybatis" class="com.p6spy.engine.spy.P6DataSource">
+        <constructor-arg ref="druidDataSourceForMybatis" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="${orm.mybatis.datasource}"/>
+        <property name="mapperLocations" value="classpath*:mybatis/mappers/**/*.xml" />
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+    </bean>
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="p6DataSourceForMybatis"></property>
+    </bean>
+
+    <tx:advice id="userTxAdviceForMyBatis" transaction-manager="dataSourceTransactionManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="upsert*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="edit*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="create*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="new*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="set*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="remove*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="change*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="execute*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="activate*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="register*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="send*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="process*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="unifyOrder*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="xeditable*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Throwable"/>
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Throwable"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Throwable"/>
+            <tx:method name="list*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Throwable"/>
+            <tx:method name="select*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Throwable"/>
+
+            <!--特殊-->
+
+            <tx:method name="*" propagation="REQUIRED" read-only="true" rollback-for="java.lang.Throwable"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="mybatisOperationForMySql" expression="execution(* com.xxx.*.service..*.*(..))"/>
+        <aop:advisor advice-ref="userTxAdviceForMyBatis" pointcut-ref="mybatisOperationForMySql"/>
+    </aop:config>
+
+</beans>

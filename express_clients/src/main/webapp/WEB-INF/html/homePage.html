@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>捷杰送达</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/homePage.css" />
+</head>
+<body>
+<div class="page">
+    <div class="weui-mask" id="iosMask" style="display: none"></div>
+    <img style="width: 100%" src="../assets/images/homePage.png" alt="">
+    <div class="container">
+        <div class="item item-body" onclick="receive()">
+            <img class="full-image" src="../assets/images/receive.png">
+            <p>
+                我要收件
+            </p>
+        </div>
+        <div class="item item-body" style="float: right" onclick="post()">
+            <img class="full-image" src="../assets/images/post.png">
+            <p>
+                我要寄件
+            </p>
+        </div>
+        <div class="item item-body" style="margin-top: 6px" onclick="check()">
+            <img class="full-image" src="../assets/images/check.png">
+            <p>
+                我要查询
+            </p>
+        </div>
+        <div class="item item-body" style="margin-top: 6px;float: right" onclick="info()">
+            <img class="full-image" style="width: 48px" src="../assets/images/person.jpg">
+            <p>
+                个人中心
+            </p>
+        </div>
+    </div>
+    <div class="doing">
+        <p>
+            您当前有<span id="receiverOrderCount">0</span>单快递待签收<span onclick="window.location.href='../homePage/receiveOrderHtml'">去看看</span>
+        </p>
+        <div></div>
+        <p>
+            您当前有<span id="sendOrderCount">0</span>单快递在寄件<span onclick="window.location.href='../homePage/sendOrderHtml'">去看看</span>
+        </p>
+    </div>
+</div>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script>
+    //获取身份信息
+    var authToken = '${authToken}';
+    var userStatus = '${userStatus}';
+    var openId = '${openId}';
+    sessionStorage.setItem('token', authToken);
+    sessionStorage.setItem('userStatus', userStatus);
+    sessionStorage.setItem('openId', openId);
+</script>
+<script type="text/javascript" src="../assets/js/homePage/homePage.js"></script>
+
+</body>
+</html>

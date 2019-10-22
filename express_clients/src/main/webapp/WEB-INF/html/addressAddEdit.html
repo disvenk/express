@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>地址</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/addressAddEdit.css" />
+</head>
+<body>
+<div class="container">
+    <div class="weui-panel" style="color: #313131;">
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_small-appmsg">
+                <div class="weui-cells" style="background-color: #f8f8f8">
+                    <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                        <div class="weui-cell__bd weui-cell_primary">
+                            <span id="type">收件人</span><div style="display: inline-block;float: right;width: 70%"><input id="name" type="text" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请输入姓名"></div>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                        <div class="weui-cell__bd weui-cell_primary">
+                            手机号<div style="display: inline-block;float: right;width: 70%"><input id="phone" type="tel" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请输入手机号"></div>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                        <div class="weui-cell__bd weui-cell_primary">
+                            省市区<div style="display: inline-block;float: right;width: 70%"><input id="province" type="text" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请选择省市区" readonly></div>
+                        </div>
+                    </div>
+                    <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                        <div class="weui-cell__bd weui-cell_primary">
+                            详细地址<div style="display: inline-block;float: right;width: 70%"><input id="address" type="text" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请输入详细地址"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width: 100%;position: fixed;bottom: 0;background-color: #fff;z-index: 100;padding: 5px 0">
+    <a id="save" style="display: block;width: 92%;height: 3.1rem;line-height: 3.1rem;text-align: center;color: #fff;background-color: #2aade5;;margin-left: 4%;border-radius: 6px">保存</a>
+</div>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script type="text/javascript" src="../assets/js/picker.min.js"></script>
+<script type="text/javascript" src="../assets/js/homePage/addressAddEdit.js"></script>
+</body>
+</html>

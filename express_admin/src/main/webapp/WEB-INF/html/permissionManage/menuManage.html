@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>菜单列表</title>
+    <meta name="description" content="Restyling jQuery UI Widgets and Elements" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace.min.css" id="main-ace-style" />
+    <link rel="stylesheet" href="../assets/layui/frame/layui/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/common/common.css" />
+    <link rel="stylesheet" href="../assets/css/permissionManage/menuManage.css"/>
+    <link rel="stylesheet" href="../assets/css/common/infoTable.css" />
+</head>
+<style type="text/css">
+    .icon-items {
+        display: inline-block;
+        width: 200px;
+        height: 140px;
+        border:1px solid #d5d5d5;
+        overflow-y: scroll;
+    }
+
+    .icon-items li {
+        display: inline-block;
+        float: left;
+        width: 33%;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+    }
+
+    .icon-items li:hover {
+        background-color: #009688;
+        color: #fff;
+    }
+
+    .icon-items li.active {
+        background-color: #009688;
+        color: #fff;
+    }
+    .table {
+        margin-bottom: 100px !important;
+    }
+</style>
+<body class="no-skin">
+<!--loading flash-->
+<div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div>
+
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container">
+    <div class="main-content">
+        <div class="page-content">
+
+            <!-- /section:settings.box -->
+            <div class="page-content-area">
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <!-- PAGE CONTENT BEGINS -->
+
+                        <p class="layui-elem-quote">当前位置：客户管理</p>
+                        <ul class="admin-operate-items clearfix">
+                            <li class="admin-operate-item w0">
+                                <!--<button id="addCategory" class="admin-btn w96">新增菜单</button>-->
+                                <button id="addCategory" class="layui-btn" id="courierAdd">新增菜单</button>
+                            </li>
+                            <li class="admin-operate-item w1"></li>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="order-topic center">名称</th>
+                                    <th class="order-topic center">链接</th>
+                                    <th class="order-topic center">所属父菜单</th>
+                                    <th class="order-topic center">排序</th>
+                                    <th class="order-topic center" style="min-width: 200px">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody">
+                                </tbody>
+                            </table>
+
+                            <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content-area -->
+        </div><!-- /.page-content -->
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+
+<!--一级确认删除摸态窗-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabe">确认</h4>
+            </div>
+            <div class="modal-body">
+                <span>您确认要删除该菜单吗？</span>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="delSure">确认</div>
+                <div data-dismiss="modal" style="color: #0e90d2">取消</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--二级确认删除摸态窗-->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabe2">确认</h4>
+            </div>
+            <div class="modal-body">
+                <span>您确认要删除该菜单吗？</span>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="delSure2">确认</div>
+                <div data-dismiss="modal" style="color: #0e90d2">取消</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--不得删除一级菜单摸态窗-->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabe1">菜单确认</h4>
+            </div>
+            <div class="modal-body">
+                <span>不能直接删除一级菜单</span>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="notSure">确认</div>
+                <div data-dismiss="modal" style="color: #0e90d2">返回</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--增加一级菜单摸态窗-->
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="approveModalLabel">新增父级菜单</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span class="modal-left">
+                        菜单名称：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="name" type="text"></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        排序：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="sort" type="number" ></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        图标：
+                    </span>
+                    <span class="modal-right">
+                        <input id="iconCodeTxtParent" class="modal-right-input" type="text" readonly>
+                        <ul id="parent" class="icon-items">
+                            <li class="active" value="xe68e"><i class="layui-icon">&#xe68e;</i></li>
+                             <li value="xe6c6"><i class="layui-icon">&#xe6c6;</i></li>
+                             <li value="xe6c5"><i class="layui-icon">&#xe6c5;</i></li>
+                             <li value="xe662"><i class="layui-icon">&#xe662;</i></li>
+                             <li value="xe661"><i class="layui-icon">&#xe661;</i></li>
+                             <li value="xe660"><i class="layui-icon">&#xe660;</i></li>
+                            <li value="xe65d"><i class="layui-icon">&#xe65d;</i></li>
+                            <li value="xe65f"><i class="layui-icon">&#xe65f;</i></li>
+                            <li value="xe671"><i class="layui-icon">&#xe671;</i></li>
+                            <li value="xe65c"><i class="layui-icon">&#xe65c;</i></li>
+                            <li value="xe756"><i class="layui-icon">&#xe756;</i></li>
+                            <li value="xe735"><i class="layui-icon">&#xe735;</i></li>
+                            <li value="xe65e"><i class="layui-icon">&#xe65e;</i></li>
+                            <li value="xe659"><i class="layui-icon">&#xe659;</i></li>
+                            <li value="xe715"><i class="layui-icon">&#xe715;</i></li>
+                            <li value="xe705"><i class="layui-icon">&#xe705;</i></li>
+                            <li value="xe6b2"><i class="layui-icon">&#xe6b2;</i></li>
+                            <li value="xe6af"><i class="layui-icon">&#xe6af;</i></li>
+                            <li value="xe69c"><i class="layui-icon">&#xe69c;</i></li>
+                            <li value="xe698"><i class="layui-icon">&#xe698;</i></li>
+                            <li value="xe657"><i class="layui-icon">&#xe657;</i></li>
+                            <li value="xe658"><i class="layui-icon">&#xe658;</i></li>
+                            <li value="xe65a"><i class="layui-icon">&#xe65a;</i></li>
+                            <li value="xe65b"><i class="layui-icon">&#xe65b;</i></li>
+                            <li value="xe681"><i class="layui-icon">&#xe681;</i></li>
+                            <li value="xe67c"><i class="layui-icon">&#xe67c;</i></li>
+                            <li value="xe7a0"><i class="layui-icon">&#xe7a0;</i></li>
+                            <li value="xe857"><i class="layui-icon">&#xe857;</i></li>
+                            <li value="xe652"><i class="layui-icon">&#xe652;</i></li>
+                            <li value="xe651"><i class="layui-icon">&#xe651;</i></li>
+                            <li value="xe6fc"><i class="layui-icon">&#xe6fc;</i></li>
+                            <li value="xe6ed"><i class="layui-icon">&#xe6ed;</i></li>
+                            <li value="xe688"><i class="layui-icon">&#xe688;</i></li>
+                            <li value="xe645"><i class="layui-icon">&#xe645;</i></li>
+                            <li value="xe611"><i class="layui-icon">&#xe611;</i></li>
+                            <li value="xe614"><i class="layui-icon">&#xe614;</i></li>
+                            <li value="xe60f"><i class="layui-icon">&#xe60f;</i></li>
+                            <li value="xe615"><i class="layui-icon">&#xe615;</i></li>
+                            <li value="xe641"><i class="layui-icon">&#xe641;</i></li>
+                            <li value="x1002"><i class="layui-icon">&#x1002;</i></li>
+                            <li value="xe63d"><i class="layui-icon">&#xe63d;</i></li>
+                            <li value="xe63e"><i class="layui-icon">&#xe63e;</i></li>
+                            <li value="xe620"><i class="layui-icon">&#xe620;</i></li>
+                            <li value="xe628"><i class="layui-icon">&#xe628;</i></li>
+                            <li value="x1006"><i class="layui-icon">&#x1006;</i></li>
+                            <li value="x1007"><i class="layui-icon">&#x1007;</i></li>
+                            <li value="xe629"><i class="layui-icon">&#xe629;</i></li>
+                            <li value="xe600"><i class="layui-icon">&#xe600;</i></li>
+                            <li value="xe617"><i class="layui-icon">&#xe617;</i></li>
+                            <li value="xe606"><i class="layui-icon">&#xe606;</i></li>
+                            <li value="xe609"><i class="layui-icon">&#xe609;</i></li>
+                            <li value="xe60a"><i class="layui-icon">&#xe60a;</i></li>
+                            <li value="xe62c"><i class="layui-icon">&#xe62c;</i></li>
+                            <li value="x1005"><i class="layui-icon">&#x1005;</i></li>
+                            <li value="xe61b"><i class="layui-icon">&#xe61b;</i></li>
+                            <li value="xe610"><i class="layui-icon">&#xe610;</i></li>
+                            <li value="xe602"><i class="layui-icon">&#xe602;</i></li>
+                            <li value="xe603"><i class="layui-icon">&#xe603;</i></li>
+                            <li value="xe62d"><i class="layui-icon">&#xe62d;</i></li>
+                            <li value="xe62e"><i class="layui-icon">&#xe62e;</i></li>
+                            <li value="xe62f"><i class="layui-icon">&#xe62f;</i></li>
+                            <li value="xe61f"><i class="layui-icon">&#xe61f;</i></li>
+                            <li value="xe601"><i class="layui-icon">&#xe601;</i></li>
+                            <li value="xe630"><i class="layui-icon">&#xe630;</i></li>
+                            <li value="xe631"><i class="layui-icon">&#xe631;</i></li>
+                            <li value="xe654"><i class="layui-icon">&#xe654;</i></li>
+                            <li value="xe642"><i class="layui-icon">&#xe642;</i></li>
+                            <li value="xe640"><i class="layui-icon">&#xe640;</i></li>
+                            <li value="xe61a"><i class="layui-icon">&#xe61a;</i></li>
+                            <li value="xe621"><i class="layui-icon">&#xe621;</i></li>
+                            <li value="xe632"><i class="layui-icon">&#xe632;</i></li>
+                            <li value="xe618"><i class="layui-icon">&#xe618;</i></li>
+                            <li value="xe608"><i class="layui-icon">&#xe608;</i></li>
+                            <li value="xe633"><i class="layui-icon">&#xe633;</i></li>
+                            <li value="xe61c"><i class="layui-icon">&#xe61c;</i></li>
+                            <li value="xe634"><i class="layui-icon">&#xe634;</i></li>
+                            <li value="xe607"><i class="layui-icon">&#xe607;</i></li>
+                            <li value="xe635"><i class="layui-icon">&#xe635;</i></li>
+                            <li value="xe636"><i class="layui-icon">&#xe636;</i></li>
+                            <li value="xe60b"><i class="layui-icon">&#xe60b;</i></li>
+                            <li value="xe619"><i class="layui-icon">&#xe619;</i></li>
+                            <li value="xe637"><i class="layui-icon">&#xe637;</i></li>
+                            <li value="xe61d"><i class="layui-icon">&#xe61d;</i></li>
+                            <li value="xe604"><i class="layui-icon">&#xe604;</i></li>
+                            <li value="xe612"><i class="layui-icon">&#xe612;</i></li>
+                            <li value="xe605"><i class="layui-icon">&#xe605;</i></li>
+                            <li value="xe638"><i class="layui-icon">&#xe638;</i></li>
+                            <li value="xe60c"><i class="layui-icon">&#xe60c;</i></li>
+                            <li value="xe616"><i class="layui-icon">&#xe616;</i></li>
+                            <li value="xe613"><i class="layui-icon">&#xe613;</i></li>
+                            <li value="xe61e"><i class="layui-icon">&#xe61e;</i></li>
+                            <li value="xe60d"><i class="layui-icon">&#xe60d;</i></li>
+                            <li value="xe64c"><i class="layui-icon">&#xe64c;</i></li>
+                            <li value="xe60e"><i class="layui-icon">&#xe60e;</i></li>
+                            <li value="xe622"><i class="layui-icon">&#xe622;</i></li>
+                            <li value="xe64f"><i class="layui-icon">&#xe64f;</i></li>
+                            <li value="xe64d"><i class="layui-icon">&#xe64d;</i></li>
+                            <li value="xe639"><i class="layui-icon">&#xe639;</i></li>
+                            <li value="xe623"><i class="layui-icon">&#xe623;</i></li>
+                            <li value="xe63f"><i class="layui-icon">&#xe63f;</i></li>
+                            <li value="xe643"><i class="layui-icon">&#xe643;</i></li>
+                            <li value="xe647"><i class="layui-icon">&#xe647;</i></li>
+                            <li value="xe648"><i class="layui-icon">&#xe648;</i></li>
+                            <li value="xe649"><i class="layui-icon">&#xe649;</i></li>
+                            <li value="xe626"><i class="layui-icon">&#xe626;</i></li>
+                            <li value="xe627"><i class="layui-icon">&#xe627;</i></li>
+                            <li value="xe62b"><i class="layui-icon">&#xe62b;</i></li>
+                            <li value="xe63a"><i class="layui-icon">&#xe63a;</i></li>
+                            <li value="xe624"><i class="layui-icon">&#xe624;</i></li>
+                            <li value="xe63b"><i class="layui-icon">&#xe63b;</i></li>
+                            <li value="xe650"><i class="layui-icon">&#xe650;</i></li>
+                            <li value="xe64b"><i class="layui-icon">&#xe64b;</i></li>
+                            <li value="xe62a"><i class="layui-icon">&#xe62a;</i></li>
+                            <li value="xe64e"><i class="layui-icon">&#xe64e;</i></li>
+                            <li value="xe646"><i class="layui-icon">&#xe646;</i></li>
+                            <li value="xe625"><i class="layui-icon">&#xe625;</i></li>
+                            <li value="xe64a"><i class="layui-icon">&#xe64a;</i></li>
+                            <li value="xe644"><i class="layui-icon">&#xe644;</i></li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="addSure">确认</div>
+                <div data-dismiss="modal" id="addCanel" style="color: #0e90d2">取消</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--增加下级菜单摸态窗-->
+<div class="modal fade" id="approveModa2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="approveModalLabe2">新增下级菜单</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span class="modal-left">
+                        菜单名称：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="name2" type="text"></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        路径：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="href2" type="text" ></span>
+                </div>
+                <div id="orderNum1" style="margin-top: 10px;">
+                    <span class="modal-left">
+                        排序：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="sort1" type="number" min="0" ></span>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        图标：
+                    </span>
+                    <span class="modal-right">
+                        <input id="iconCodeTxtChild" class="modal-right-input" type="text" readonly>
+                        <ul id="child" class="icon-items">
+                            <li class="active" value="xe68e"><i class="layui-icon">&#xe68e;</i></li>
+                             <li value="xe6c6"><i class="layui-icon">&#xe6c6;</i></li>
+                             <li value="xe6c5"><i class="layui-icon">&#xe6c5;</i></li>
+                             <li value="xe662"><i class="layui-icon">&#xe662;</i></li>
+                             <li value="xe661"><i class="layui-icon">&#xe661;</i></li>
+                             <li value="xe660"><i class="layui-icon">&#xe660;</i></li>
+                            <li value="xe65d"><i class="layui-icon">&#xe65d;</i></li>
+                            <li value="xe65f"><i class="layui-icon">&#xe65f;</i></li>
+                            <li value="xe671"><i class="layui-icon">&#xe671;</i></li>
+                            <li value="xe65c"><i class="layui-icon">&#xe65c;</i></li>
+                            <li value="xe756"><i class="layui-icon">&#xe756;</i></li>
+                            <li value="xe735"><i class="layui-icon">&#xe735;</i></li>
+                            <li value="xe65e"><i class="layui-icon">&#xe65e;</i></li>
+                            <li value="xe659"><i class="layui-icon">&#xe659;</i></li>
+                            <li value="xe715"><i class="layui-icon">&#xe715;</i></li>
+                            <li value="xe705"><i class="layui-icon">&#xe705;</i></li>
+                            <li value="xe6b2"><i class="layui-icon">&#xe6b2;</i></li>
+                            <li value="xe6af"><i class="layui-icon">&#xe6af;</i></li>
+                            <li value="xe69c"><i class="layui-icon">&#xe69c;</i></li>
+                            <li value="xe698"><i class="layui-icon">&#xe698;</i></li>
+                            <li value="xe657"><i class="layui-icon">&#xe657;</i></li>
+                            <li value="xe658"><i class="layui-icon">&#xe658;</i></li>
+                            <li value="xe65a"><i class="layui-icon">&#xe65a;</i></li>
+                            <li value="xe65b"><i class="layui-icon">&#xe65b;</i></li>
+                            <li value="xe681"><i class="layui-icon">&#xe681;</i></li>
+                            <li value="xe67c"><i class="layui-icon">&#xe67c;</i></li>
+                            <li value="xe7a0"><i class="layui-icon">&#xe7a0;</i></li>
+                            <li value="xe857"><i class="layui-icon">&#xe857;</i></li>
+                            <li value="xe652"><i class="layui-icon">&#xe652;</i></li>
+                            <li value="xe651"><i class="layui-icon">&#xe651;</i></li>
+                            <li value="xe6fc"><i class="layui-icon">&#xe6fc;</i></li>
+                            <li value="xe6ed"><i class="layui-icon">&#xe6ed;</i></li>
+                            <li value="xe688"><i class="layui-icon">&#xe688;</i></li>
+                            <li value="xe645"><i class="layui-icon">&#xe645;</i></li>
+                            <li value="xe611"><i class="layui-icon">&#xe611;</i></li>
+                            <li value="xe614"><i class="layui-icon">&#xe614;</i></li>
+                            <li value="xe60f"><i class="layui-icon">&#xe60f;</i></li>
+                            <li value="xe615"><i class="layui-icon">&#xe615;</i></li>
+                            <li value="xe641"><i class="layui-icon">&#xe641;</i></li>
+                            <li value="x1002"><i class="layui-icon">&#x1002;</i></li>
+                            <li value="xe63d"><i class="layui-icon">&#xe63d;</i></li>
+                            <li value="xe63e"><i class="layui-icon">&#xe63e;</i></li>
+                            <li value="xe620"><i class="layui-icon">&#xe620;</i></li>
+                            <li value="xe628"><i class="layui-icon">&#xe628;</i></li>
+                            <li value="x1006"><i class="layui-icon">&#x1006;</i></li>
+                            <li value="x1007"><i class="layui-icon">&#x1007;</i></li>
+                            <li value="xe629"><i class="layui-icon">&#xe629;</i></li>
+                            <li value="xe600"><i class="layui-icon">&#xe600;</i></li>
+                            <li value="xe617"><i class="layui-icon">&#xe617;</i></li>
+                            <li value="xe606"><i class="layui-icon">&#xe606;</i></li>
+                            <li value="xe609"><i class="layui-icon">&#xe609;</i></li>
+                            <li value="xe60a"><i class="layui-icon">&#xe60a;</i></li>
+                            <li value="xe62c"><i class="layui-icon">&#xe62c;</i></li>
+                            <li value="x1005"><i class="layui-icon">&#x1005;</i></li>
+                            <li value="xe61b"><i class="layui-icon">&#xe61b;</i></li>
+                            <li value="xe610"><i class="layui-icon">&#xe610;</i></li>
+                            <li value="xe602"><i class="layui-icon">&#xe602;</i></li>
+                            <li value="xe603"><i class="layui-icon">&#xe603;</i></li>
+                            <li value="xe62d"><i class="layui-icon">&#xe62d;</i></li>
+                            <li value="xe62e"><i class="layui-icon">&#xe62e;</i></li>
+                            <li value="xe62f"><i class="layui-icon">&#xe62f;</i></li>
+                            <li value="xe61f"><i class="layui-icon">&#xe61f;</i></li>
+                            <li value="xe601"><i class="layui-icon">&#xe601;</i></li>
+                            <li value="xe630"><i class="layui-icon">&#xe630;</i></li>
+                            <li value="xe631"><i class="layui-icon">&#xe631;</i></li>
+                            <li value="xe654"><i class="layui-icon">&#xe654;</i></li>
+                            <li value="xe642"><i class="layui-icon">&#xe642;</i></li>
+                            <li value="xe640"><i class="layui-icon">&#xe640;</i></li>
+                            <li value="xe61a"><i class="layui-icon">&#xe61a;</i></li>
+                            <li value="xe621"><i class="layui-icon">&#xe621;</i></li>
+                            <li value="xe632"><i class="layui-icon">&#xe632;</i></li>
+                            <li value="xe618"><i class="layui-icon">&#xe618;</i></li>
+                            <li value="xe608"><i class="layui-icon">&#xe608;</i></li>
+                            <li value="xe633"><i class="layui-icon">&#xe633;</i></li>
+                            <li value="xe61c"><i class="layui-icon">&#xe61c;</i></li>
+                            <li value="xe634"><i class="layui-icon">&#xe634;</i></li>
+                            <li value="xe607"><i class="layui-icon">&#xe607;</i></li>
+                            <li value="xe635"><i class="layui-icon">&#xe635;</i></li>
+                            <li value="xe636"><i class="layui-icon">&#xe636;</i></li>
+                            <li value="xe60b"><i class="layui-icon">&#xe60b;</i></li>
+                            <li value="xe619"><i class="layui-icon">&#xe619;</i></li>
+                            <li value="xe637"><i class="layui-icon">&#xe637;</i></li>
+                            <li value="xe61d"><i class="layui-icon">&#xe61d;</i></li>
+                            <li value="xe604"><i class="layui-icon">&#xe604;</i></li>
+                            <li value="xe612"><i class="layui-icon">&#xe612;</i></li>
+                            <li value="xe605"><i class="layui-icon">&#xe605;</i></li>
+                            <li value="xe638"><i class="layui-icon">&#xe638;</i></li>
+                            <li value="xe60c"><i class="layui-icon">&#xe60c;</i></li>
+                            <li value="xe616"><i class="layui-icon">&#xe616;</i></li>
+                            <li value="xe613"><i class="layui-icon">&#xe613;</i></li>
+                            <li value="xe61e"><i class="layui-icon">&#xe61e;</i></li>
+                            <li value="xe60d"><i class="layui-icon">&#xe60d;</i></li>
+                            <li value="xe64c"><i class="layui-icon">&#xe64c;</i></li>
+                            <li value="xe60e"><i class="layui-icon">&#xe60e;</i></li>
+                            <li value="xe622"><i class="layui-icon">&#xe622;</i></li>
+                            <li value="xe64f"><i class="layui-icon">&#xe64f;</i></li>
+                            <li value="xe64d"><i class="layui-icon">&#xe64d;</i></li>
+                            <li value="xe639"><i class="layui-icon">&#xe639;</i></li>
+                            <li value="xe623"><i class="layui-icon">&#xe623;</i></li>
+                            <li value="xe63f"><i class="layui-icon">&#xe63f;</i></li>
+                            <li value="xe643"><i class="layui-icon">&#xe643;</i></li>
+                            <li value="xe647"><i class="layui-icon">&#xe647;</i></li>
+                            <li value="xe648"><i class="layui-icon">&#xe648;</i></li>
+                            <li value="xe649"><i class="layui-icon">&#xe649;</i></li>
+                            <li value="xe626"><i class="layui-icon">&#xe626;</i></li>
+                            <li value="xe627"><i class="layui-icon">&#xe627;</i></li>
+                            <li value="xe62b"><i class="layui-icon">&#xe62b;</i></li>
+                            <li value="xe63a"><i class="layui-icon">&#xe63a;</i></li>
+                            <li value="xe624"><i class="layui-icon">&#xe624;</i></li>
+                            <li value="xe63b"><i class="layui-icon">&#xe63b;</i></li>
+                            <li value="xe650"><i class="layui-icon">&#xe650;</i></li>
+                            <li value="xe64b"><i class="layui-icon">&#xe64b;</i></li>
+                            <li value="xe62a"><i class="layui-icon">&#xe62a;</i></li>
+                            <li value="xe64e"><i class="layui-icon">&#xe64e;</i></li>
+                            <li value="xe646"><i class="layui-icon">&#xe646;</i></li>
+                            <li value="xe625"><i class="layui-icon">&#xe625;</i></li>
+                            <li value="xe64a"><i class="layui-icon">&#xe64a;</i></li>
+                            <li value="xe644"><i class="layui-icon">&#xe644;</i></li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="addSure2">确认</div>
+                <div data-dismiss="modal" id="addCanel2" style="color: #0e90d2">取消</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--编辑父菜单摸态窗-->
+<div class="modal fade" id="approveModal1" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="approveModalLabel1">编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span class="modal-left">
+                        菜单名称：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="name1" type="text"></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        排序：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="sort2" type="number" min="0" ></span>
+                </div>
+                <div style="margin-top: 10px;">
+                <span class="modal-left">当前排序：</span><span id="pressentSort" class="modal-right" style="vertical-align: middle;"></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        图标：
+                    </span>
+                    <span class="modal-right">
+                        <input id="iconCodeTxtParentE" class="modal-right-input" type="text" readonly>
+                        <ul id="parentE" class="icon-items">
+                            <li class="active" value="xe68e"><i class="layui-icon">&#xe68e;</i></li>
+                            <li value="xe6c6"><i class="layui-icon">&#xe6c6;</i></li>
+                             <li value="xe6c5"><i class="layui-icon">&#xe6c5;</i></li>
+                             <li value="xe662"><i class="layui-icon">&#xe662;</i></li>
+                             <li value="xe661"><i class="layui-icon">&#xe661;</i></li>
+                             <li value="xe660"><i class="layui-icon">&#xe660;</i></li>
+                            <li value="xe65d"><i class="layui-icon">&#xe65d;</i></li>
+                            <li value="xe65f"><i class="layui-icon">&#xe65f;</i></li>
+                            <li value="xe671"><i class="layui-icon">&#xe671;</i></li>
+                            <li value="xe65c"><i class="layui-icon">&#xe65c;</i></li>
+                            <li value="xe756"><i class="layui-icon">&#xe756;</i></li>
+                            <li value="xe735"><i class="layui-icon">&#xe735;</i></li>
+                            <li value="xe65e"><i class="layui-icon">&#xe65e;</i></li>
+                            <li value="xe659"><i class="layui-icon">&#xe659;</i></li>
+                            <li value="xe715"><i class="layui-icon">&#xe715;</i></li>
+                            <li value="xe705"><i class="layui-icon">&#xe705;</i></li>
+                            <li value="xe6b2"><i class="layui-icon">&#xe6b2;</i></li>
+                            <li value="xe6af"><i class="layui-icon">&#xe6af;</i></li>
+                            <li value="xe69c"><i class="layui-icon">&#xe69c;</i></li>
+                            <li value="xe698"><i class="layui-icon">&#xe698;</i></li>
+                            <li value="xe657"><i class="layui-icon">&#xe657;</i></li>
+                            <li value="xe658"><i class="layui-icon">&#xe658;</i></li>
+                            <li value="xe65a"><i class="layui-icon">&#xe65a;</i></li>
+                            <li value="xe65b"><i class="layui-icon">&#xe65b;</i></li>
+                            <li value="xe681"><i class="layui-icon">&#xe681;</i></li>
+                            <li value="xe67c"><i class="layui-icon">&#xe67c;</i></li>
+                            <li value="xe7a0"><i class="layui-icon">&#xe7a0;</i></li>
+                            <li value="xe857"><i class="layui-icon">&#xe857;</i></li>
+                            <li value="xe652"><i class="layui-icon">&#xe652;</i></li>
+                            <li value="xe651"><i class="layui-icon">&#xe651;</i></li>
+                            <li value="xe6fc"><i class="layui-icon">&#xe6fc;</i></li>
+                            <li value="xe6ed"><i class="layui-icon">&#xe6ed;</i></li>
+                            <li value="xe688"><i class="layui-icon">&#xe688;</i></li>
+                            <li value="xe645"><i class="layui-icon">&#xe645;</i></li>
+                            <li value="xe611"><i class="layui-icon">&#xe611;</i></li>
+                            <li value="xe614"><i class="layui-icon">&#xe614;</i></li>
+                            <li value="xe60f"><i class="layui-icon">&#xe60f;</i></li>
+                            <li value="xe615"><i class="layui-icon">&#xe615;</i></li>
+                            <li value="xe641"><i class="layui-icon">&#xe641;</i></li>
+                            <li value="x1002"><i class="layui-icon">&#x1002;</i></li>
+                            <li value="xe63d"><i class="layui-icon">&#xe63d;</i></li>
+                            <li value="xe63e"><i class="layui-icon">&#xe63e;</i></li>
+                            <li value="xe620"><i class="layui-icon">&#xe620;</i></li>
+                            <li value="xe628"><i class="layui-icon">&#xe628;</i></li>
+                            <li value="x1006"><i class="layui-icon">&#x1006;</i></li>
+                            <li value="x1007"><i class="layui-icon">&#x1007;</i></li>
+                            <li value="xe629"><i class="layui-icon">&#xe629;</i></li>
+                            <li value="xe600"><i class="layui-icon">&#xe600;</i></li>
+                            <li value="xe617"><i class="layui-icon">&#xe617;</i></li>
+                            <li value="xe606"><i class="layui-icon">&#xe606;</i></li>
+                            <li value="xe609"><i class="layui-icon">&#xe609;</i></li>
+                            <li value="xe60a"><i class="layui-icon">&#xe60a;</i></li>
+                            <li value="xe62c"><i class="layui-icon">&#xe62c;</i></li>
+                            <li value="x1005"><i class="layui-icon">&#x1005;</i></li>
+                            <li value="xe61b"><i class="layui-icon">&#xe61b;</i></li>
+                            <li value="xe610"><i class="layui-icon">&#xe610;</i></li>
+                            <li value="xe602"><i class="layui-icon">&#xe602;</i></li>
+                            <li value="xe603"><i class="layui-icon">&#xe603;</i></li>
+                            <li value="xe62d"><i class="layui-icon">&#xe62d;</i></li>
+                            <li value="xe62e"><i class="layui-icon">&#xe62e;</i></li>
+                            <li value="xe62f"><i class="layui-icon">&#xe62f;</i></li>
+                            <li value="xe61f"><i class="layui-icon">&#xe61f;</i></li>
+                            <li value="xe601"><i class="layui-icon">&#xe601;</i></li>
+                            <li value="xe630"><i class="layui-icon">&#xe630;</i></li>
+                            <li value="xe631"><i class="layui-icon">&#xe631;</i></li>
+                            <li value="xe654"><i class="layui-icon">&#xe654;</i></li>
+                            <li value="xe642"><i class="layui-icon">&#xe642;</i></li>
+                            <li value="xe640"><i class="layui-icon">&#xe640;</i></li>
+                            <li value="xe61a"><i class="layui-icon">&#xe61a;</i></li>
+                            <li value="xe621"><i class="layui-icon">&#xe621;</i></li>
+                            <li value="xe632"><i class="layui-icon">&#xe632;</i></li>
+                            <li value="xe618"><i class="layui-icon">&#xe618;</i></li>
+                            <li value="xe608"><i class="layui-icon">&#xe608;</i></li>
+                            <li value="xe633"><i class="layui-icon">&#xe633;</i></li>
+                            <li value="xe61c"><i class="layui-icon">&#xe61c;</i></li>
+                            <li value="xe634"><i class="layui-icon">&#xe634;</i></li>
+                            <li value="xe607"><i class="layui-icon">&#xe607;</i></li>
+                            <li value="xe635"><i class="layui-icon">&#xe635;</i></li>
+                            <li value="xe636"><i class="layui-icon">&#xe636;</i></li>
+                            <li value="xe60b"><i class="layui-icon">&#xe60b;</i></li>
+                            <li value="xe619"><i class="layui-icon">&#xe619;</i></li>
+                            <li value="xe637"><i class="layui-icon">&#xe637;</i></li>
+                            <li value="xe61d"><i class="layui-icon">&#xe61d;</i></li>
+                            <li value="xe604"><i class="layui-icon">&#xe604;</i></li>
+                            <li value="xe612"><i class="layui-icon">&#xe612;</i></li>
+                            <li value="xe605"><i class="layui-icon">&#xe605;</i></li>
+                            <li value="xe638"><i class="layui-icon">&#xe638;</i></li>
+                            <li value="xe60c"><i class="layui-icon">&#xe60c;</i></li>
+                            <li value="xe616"><i class="layui-icon">&#xe616;</i></li>
+                            <li value="xe613"><i class="layui-icon">&#xe613;</i></li>
+                            <li value="xe61e"><i class="layui-icon">&#xe61e;</i></li>
+                            <li value="xe60d"><i class="layui-icon">&#xe60d;</i></li>
+                            <li value="xe64c"><i class="layui-icon">&#xe64c;</i></li>
+                            <li value="xe60e"><i class="layui-icon">&#xe60e;</i></li>
+                            <li value="xe622"><i class="layui-icon">&#xe622;</i></li>
+                            <li value="xe64f"><i class="layui-icon">&#xe64f;</i></li>
+                            <li value="xe64d"><i class="layui-icon">&#xe64d;</i></li>
+                            <li value="xe639"><i class="layui-icon">&#xe639;</i></li>
+                            <li value="xe623"><i class="layui-icon">&#xe623;</i></li>
+                            <li value="xe63f"><i class="layui-icon">&#xe63f;</i></li>
+                            <li value="xe643"><i class="layui-icon">&#xe643;</i></li>
+                            <li value="xe647"><i class="layui-icon">&#xe647;</i></li>
+                            <li value="xe648"><i class="layui-icon">&#xe648;</i></li>
+                            <li value="xe649"><i class="layui-icon">&#xe649;</i></li>
+                            <li value="xe626"><i class="layui-icon">&#xe626;</i></li>
+                            <li value="xe627"><i class="layui-icon">&#xe627;</i></li>
+                            <li value="xe62b"><i class="layui-icon">&#xe62b;</i></li>
+                            <li value="xe63a"><i class="layui-icon">&#xe63a;</i></li>
+                            <li value="xe624"><i class="layui-icon">&#xe624;</i></li>
+                            <li value="xe63b"><i class="layui-icon">&#xe63b;</i></li>
+                            <li value="xe650"><i class="layui-icon">&#xe650;</i></li>
+                            <li value="xe64b"><i class="layui-icon">&#xe64b;</i></li>
+                            <li value="xe62a"><i class="layui-icon">&#xe62a;</i></li>
+                            <li value="xe64e"><i class="layui-icon">&#xe64e;</i></li>
+                            <li value="xe646"><i class="layui-icon">&#xe646;</i></li>
+                            <li value="xe625"><i class="layui-icon">&#xe625;</i></li>
+                            <li value="xe64a"><i class="layui-icon">&#xe64a;</i></li>
+                            <li value="xe644"><i class="layui-icon">&#xe644;</i></li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="editorSure">确认</div>
+                <div data-dismiss="modal" id="editorCanel" style="color: #0e90d2">取消</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--编辑子菜单摸态窗-->
+<div class="modal fade" id="approveModal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="approveModalLabel2">编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span class="modal-left">
+                        菜单名称：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="name3" type="text"></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left" >
+                        路径：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="href3" type="text" ></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        排序：
+                    </span>
+                    <span class="modal-right"><input class="modal-right-input" id="sort3" type="number" min="0" ></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">当前排序：</span><span id="pressentSort1" class="modal-right"></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="modal-left">
+                        图标：
+                    </span>
+                    <span class="modal-right">
+                        <input id="iconCodeTxtChildE" class="modal-right-input" type="text" readonly>
+                        <ul id="childE" class="icon-items">
+                            <li class="active" value="xe68e"><i class="layui-icon">&#xe68e;</i></li>
+                            <li value="xe6c6"><i class="layui-icon">&#xe6c6;</i></li>
+                             <li value="xe6c5"><i class="layui-icon">&#xe6c5;</i></li>
+                             <li value="xe662"><i class="layui-icon">&#xe662;</i></li>
+                             <li value="xe661"><i class="layui-icon">&#xe661;</i></li>
+                             <li value="xe660"><i class="layui-icon">&#xe660;</i></li>
+                            <li value="xe65d"><i class="layui-icon">&#xe65d;</i></li>
+                            <li value="xe65f"><i class="layui-icon">&#xe65f;</i></li>
+                            <li value="xe671"><i class="layui-icon">&#xe671;</i></li>
+                            <li value="xe65c"><i class="layui-icon">&#xe65c;</i></li>
+                            <li value="xe756"><i class="layui-icon">&#xe756;</i></li>
+                            <li value="xe735"><i class="layui-icon">&#xe735;</i></li>
+                            <li value="xe65e"><i class="layui-icon">&#xe65e;</i></li>
+                            <li value="xe659"><i class="layui-icon">&#xe659;</i></li>
+                            <li value="xe715"><i class="layui-icon">&#xe715;</i></li>
+                            <li value="xe705"><i class="layui-icon">&#xe705;</i></li>
+                            <li value="xe6b2"><i class="layui-icon">&#xe6b2;</i></li>
+                            <li value="xe6af"><i class="layui-icon">&#xe6af;</i></li>
+                            <li value="xe69c"><i class="layui-icon">&#xe69c;</i></li>
+                            <li value="xe698"><i class="layui-icon">&#xe698;</i></li>
+                            <li value="xe657"><i class="layui-icon">&#xe657;</i></li>
+                            <li value="xe658"><i class="layui-icon">&#xe658;</i></li>
+                            <li value="xe65a"><i class="layui-icon">&#xe65a;</i></li>
+                            <li value="xe65b"><i class="layui-icon">&#xe65b;</i></li>
+                            <li value="xe681"><i class="layui-icon">&#xe681;</i></li>
+                            <li value="xe67c"><i class="layui-icon">&#xe67c;</i></li>
+                            <li value="xe7a0"><i class="layui-icon">&#xe7a0;</i></li>
+                            <li value="xe857"><i class="layui-icon">&#xe857;</i></li>
+                            <li value="xe652"><i class="layui-icon">&#xe652;</i></li>
+                            <li value="xe651"><i class="layui-icon">&#xe651;</i></li>
+                            <li value="xe6fc"><i class="layui-icon">&#xe6fc;</i></li>
+                            <li value="xe6ed"><i class="layui-icon">&#xe6ed;</i></li>
+                            <li value="xe688"><i class="layui-icon">&#xe688;</i></li>
+                            <li value="xe645"><i class="layui-icon">&#xe645;</i></li>
+                            <li value="xe611"><i class="layui-icon">&#xe611;</i></li>
+                            <li value="xe614"><i class="layui-icon">&#xe614;</i></li>
+                            <li value="xe60f"><i class="layui-icon">&#xe60f;</i></li>
+                            <li value="xe615"><i class="layui-icon">&#xe615;</i></li>
+                            <li value="xe641"><i class="layui-icon">&#xe641;</i></li>
+                            <li value="x1002"><i class="layui-icon">&#x1002;</i></li>
+                            <li value="xe63d"><i class="layui-icon">&#xe63d;</i></li>
+                            <li value="xe63e"><i class="layui-icon">&#xe63e;</i></li>
+                            <li value="xe620"><i class="layui-icon">&#xe620;</i></li>
+                            <li value="xe628"><i class="layui-icon">&#xe628;</i></li>
+                            <li value="x1006"><i class="layui-icon">&#x1006;</i></li>
+                            <li value="x1007"><i class="layui-icon">&#x1007;</i></li>
+                            <li value="xe629"><i class="layui-icon">&#xe629;</i></li>
+                            <li value="xe600"><i class="layui-icon">&#xe600;</i></li>
+                            <li value="xe617"><i class="layui-icon">&#xe617;</i></li>
+                            <li value="xe606"><i class="layui-icon">&#xe606;</i></li>
+                            <li value="xe609"><i class="layui-icon">&#xe609;</i></li>
+                            <li value="xe60a"><i class="layui-icon">&#xe60a;</i></li>
+                            <li value="xe62c"><i class="layui-icon">&#xe62c;</i></li>
+                            <li value="x1005"><i class="layui-icon">&#x1005;</i></li>
+                            <li value="xe61b"><i class="layui-icon">&#xe61b;</i></li>
+                            <li value="xe610"><i class="layui-icon">&#xe610;</i></li>
+                            <li value="xe602"><i class="layui-icon">&#xe602;</i></li>
+                            <li value="xe603"><i class="layui-icon">&#xe603;</i></li>
+                            <li value="xe62d"><i class="layui-icon">&#xe62d;</i></li>
+                            <li value="xe62e"><i class="layui-icon">&#xe62e;</i></li>
+                            <li value="xe62f"><i class="layui-icon">&#xe62f;</i></li>
+                            <li value="xe61f"><i class="layui-icon">&#xe61f;</i></li>
+                            <li value="xe601"><i class="layui-icon">&#xe601;</i></li>
+                            <li value="xe630"><i class="layui-icon">&#xe630;</i></li>
+                            <li value="xe631"><i class="layui-icon">&#xe631;</i></li>
+                            <li value="xe654"><i class="layui-icon">&#xe654;</i></li>
+                            <li value="xe642"><i class="layui-icon">&#xe642;</i></li>
+                            <li value="xe640"><i class="layui-icon">&#xe640;</i></li>
+                            <li value="xe61a"><i class="layui-icon">&#xe61a;</i></li>
+                            <li value="xe621"><i class="layui-icon">&#xe621;</i></li>
+                            <li value="xe632"><i class="layui-icon">&#xe632;</i></li>
+                            <li value="xe618"><i class="layui-icon">&#xe618;</i></li>
+                            <li value="xe608"><i class="layui-icon">&#xe608;</i></li>
+                            <li value="xe633"><i class="layui-icon">&#xe633;</i></li>
+                            <li value="xe61c"><i class="layui-icon">&#xe61c;</i></li>
+                            <li value="xe634"><i class="layui-icon">&#xe634;</i></li>
+                            <li value="xe607"><i class="layui-icon">&#xe607;</i></li>
+                            <li value="xe635"><i class="layui-icon">&#xe635;</i></li>
+                            <li value="xe636"><i class="layui-icon">&#xe636;</i></li>
+                            <li value="xe60b"><i class="layui-icon">&#xe60b;</i></li>
+                            <li value="xe619"><i class="layui-icon">&#xe619;</i></li>
+                            <li value="xe637"><i class="layui-icon">&#xe637;</i></li>
+                            <li value="xe61d"><i class="layui-icon">&#xe61d;</i></li>
+                            <li value="xe604"><i class="layui-icon">&#xe604;</i></li>
+                            <li value="xe612"><i class="layui-icon">&#xe612;</i></li>
+                            <li value="xe605"><i class="layui-icon">&#xe605;</i></li>
+                            <li value="xe638"><i class="layui-icon">&#xe638;</i></li>
+                            <li value="xe60c"><i class="layui-icon">&#xe60c;</i></li>
+                            <li value="xe616"><i class="layui-icon">&#xe616;</i></li>
+                            <li value="xe613"><i class="layui-icon">&#xe613;</i></li>
+                            <li value="xe61e"><i class="layui-icon">&#xe61e;</i></li>
+                            <li value="xe60d"><i class="layui-icon">&#xe60d;</i></li>
+                            <li value="xe64c"><i class="layui-icon">&#xe64c;</i></li>
+                            <li value="xe60e"><i class="layui-icon">&#xe60e;</i></li>
+                            <li value="xe622"><i class="layui-icon">&#xe622;</i></li>
+                            <li value="xe64f"><i class="layui-icon">&#xe64f;</i></li>
+                            <li value="xe64d"><i class="layui-icon">&#xe64d;</i></li>
+                            <li value="xe639"><i class="layui-icon">&#xe639;</i></li>
+                            <li value="xe623"><i class="layui-icon">&#xe623;</i></li>
+                            <li value="xe63f"><i class="layui-icon">&#xe63f;</i></li>
+                            <li value="xe643"><i class="layui-icon">&#xe643;</i></li>
+                            <li value="xe647"><i class="layui-icon">&#xe647;</i></li>
+                            <li value="xe648"><i class="layui-icon">&#xe648;</i></li>
+                            <li value="xe649"><i class="layui-icon">&#xe649;</i></li>
+                            <li value="xe626"><i class="layui-icon">&#xe626;</i></li>
+                            <li value="xe627"><i class="layui-icon">&#xe627;</i></li>
+                            <li value="xe62b"><i class="layui-icon">&#xe62b;</i></li>
+                            <li value="xe63a"><i class="layui-icon">&#xe63a;</i></li>
+                            <li value="xe624"><i class="layui-icon">&#xe624;</i></li>
+                            <li value="xe63b"><i class="layui-icon">&#xe63b;</i></li>
+                            <li value="xe650"><i class="layui-icon">&#xe650;</i></li>
+                            <li value="xe64b"><i class="layui-icon">&#xe64b;</i></li>
+                            <li value="xe62a"><i class="layui-icon">&#xe62a;</i></li>
+                            <li value="xe64e"><i class="layui-icon">&#xe64e;</i></li>
+                            <li value="xe646"><i class="layui-icon">&#xe646;</i></li>
+                            <li value="xe625"><i class="layui-icon">&#xe625;</i></li>
+                            <li value="xe64a"><i class="layui-icon">&#xe64a;</i></li>
+                            <li value="xe644"><i class="layui-icon">&#xe644;</i></li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-primary sure">确认</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <div class="sure" id="editorSure1">确认</div>
+                <div data-dismiss="modal" id="editorCanel1" style="color: #0e90d2">取消</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../assets/layui/frame/layui/lay/modules/jquery-2.0.3.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script src="../assets/js/permissionManage/menuManage.js"></script>
+</body>
+</html>

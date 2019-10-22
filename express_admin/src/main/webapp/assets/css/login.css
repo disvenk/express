@@ -1,0 +1,32 @@
+.my-footer {
+    height: 40px;
+    padding: 2px 0;
+}
+.layui-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.layui-footer a {
+    color: #fff;
+}
+
+.layui-footer a:hover {
+    color: #fff;
+}
+
+.login-body {
+    background: url("../../assets/img/login-bg.jpg") center top no-repeat;
+}
+
+.layui-form-item.bg1 {
+    background: url("../../assets/img/xtdl.png") 4px top no-repeat;
+}
+
+.login-box button.btn-submit {
+    width: 300px;
+}

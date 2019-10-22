@@ -1,0 +1,585 @@
+﻿<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.express</groupId>
+        <artifactId>express</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>express_core</artifactId>
+	<name>express_core Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.2.5.RELEASE</spring.version>
+        <spring.security>4.1.0.RELEASE</spring.security>
+        <hibernate.version>5.1.3.Final</hibernate.version>
+        <poi.version>3.12</poi.version>
+    </properties>
+
+    <dependencies>
+        <!-- start kaa_utils -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>express_utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- kaa_utils end -->
+
+        <!-- start hibernate -->
+        <!-- hibernate-core 中提供了 hibernate-jpa -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <!--infinispan是个开源的数据网格平台。它公开了一个简单的数据结构（一个Cache）来存储对象。虽然可以在本地模式下运行infinispan，但其真正的价值在于分布式。
+           最大化Hibernate性能是使用infinispan数据网格，使用Infinispan作为Hibernate的第二级缓存， Infinispan是JBoss Cache的继任者，Hiberante从版本3.5上支持Infinispan作为第二级缓存。建议 Hibernate的配置，Hibernate和Infinispan使用JTA事务，以便在同一事务中完成一个操作。否则，数据库和二级缓存的操作将不被视为一个原子操作。由于使用tomcat，没有提供JTA ，我们要实现在Spring的JTA环境的框架，使用Atomikos
+        -->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-infinispan</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!-- hibernate end -->
+
+        <!-- start aspectjweaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.7.4</version>
+        </dependency>
+        <!-- aspectjweaver end -->
+
+        <!--cglib-nodep：cglib代理 实现AOP的一种方式 ； 和他对应的是DynaProxy(java动态代理)-->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <!-- cglib-nodep end -->
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId> <!-- Use 'netty-all' for 4.0 or above -->
+            <version>4.1.10.Final</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- start spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-instrument</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- spring end -->
+
+        <!-- start spring-security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+            <version>${spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
+            <version>${spring.security}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-openid</artifactId>
+            <version>${spring.security}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- spring-security end -->
+
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-tools</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <!-- start mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.30</version>
+        </dependency>
+        <!-- mysql end -->
+
+        <!-- start hibernate -->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-entitymanager</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!--Hibernate Envers记录的审计数据，主要用于意外丢失数据找回、审查数据合法性、辅助问题分析等用途。一般直接在数据库执行sql查询分析即可
+            为每个Audited的表创建一个对应的审计数据存储表，然后借助Hibernate Listener机制把对数据的增删改操作记录到审计表。
+        -->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-envers</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-c3p0</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-proxool</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!--如果已经指定使用 echache，那么 hibernate-infinispan 必须注释掉，否则报错-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-infinispan</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!--hibernate 5 后需要移除，yinw否则报错：java.lang.NoSuchMethodError: org.hibernate.annotations.common.
+        reflection.java.JavaReflectionManager.injectClassLoaderDelegate-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-commons-annotations</artifactId>-->
+            <!--<version>3.2.0.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-ehcache</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>net.sf.ehcache</groupId>-->
+            <!--<artifactId>ehcache-core</artifactId>-->
+            <!--<version>2.4.3</version>  &lt;!&ndash;升级可能导致与hibernate版本不同&ndash;&gt;-->
+        <!--</dependency>-->
+        <!-- 主要针对页面缓存 -->
+        <!--<dependency>-->
+            <!--<groupId>net.sf.ehcache</groupId>-->
+            <!--<artifactId>ehcache-web</artifactId>-->
+            <!--<version>2.0.4</version>-->
+        <!--</dependency>-->
+        <!-- hibernate end -->
+
+        <!-- start mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <!--mybatis 分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+        <!-- mybatis end -->
+
+        <!-- start druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+        <!-- druid end -->
+
+        <!-- start p6spy -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- p6spy end -->
+
+        <!-- start jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- jedis end -->
+
+        <!-- start rapid -->
+        <dependency>
+            <groupId>com.googlecode.rapid-framework</groupId>
+            <artifactId>rapid-core</artifactId>
+            <version>4.0.5</version>
+        </dependency>
+        <!-- rapid end -->
+
+        <!-- start freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
+        <!-- freemarker end -->
+
+        <!-- 导入pinyin4j start-->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <!-- 导入pinyin4j end-->
+
+        <!-- quarz定时任务使用start -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <!-- quarz定时任务使用 end-->
+
+        <!-- poi-ooxml：若报错：java.lang.NoClassDefFoundError: org/w3c/dom/ElementTraversal，解决方法：添加下面引用，把poi-ooxml排除掉 -->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.poi</groupId>-->
+            <!--<artifactId>poi-ooxml</artifactId>-->
+            <!--<version>3.9</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>xml-apis</artifactId>-->
+                    <!--<groupId>xml-apis</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+        <!-- poi-ooxml end -->
+
+        <!--<dependency>-->
+        <!--<groupId>xml-apis</groupId>-->
+        <!--<artifactId>xml-apis</artifactId>-->
+        <!--<version>2.0.0</version>-->
+        <!--</dependency>-->
+
+
+
+        <!--<dependency>-->
+            <!--<groupId>org.tuckey</groupId>-->
+            <!--<artifactId>urlrewritefilter</artifactId>-->
+            <!--<version>4.0.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>javax.activation</groupId>-->
+            <!--<artifactId>activation</artifactId>-->
+            <!--<version>1.1.1</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.antlr</groupId>-->
+            <!--<artifactId>antlr</artifactId>-->
+            <!--<version>3.5.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.jboss</groupId>-->
+            <!--<artifactId>jandex</artifactId>-->
+            <!--<version>2.0.0.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>cn.apiclub.tool</groupId>-->
+            <!--<artifactId>simplecaptcha</artifactId>-->
+            <!--<version>1.2.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>javax.mail</groupId>-->
+            <!--<artifactId>javax.mail-api</artifactId>-->
+            <!--<version>1.5.4</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.logging</groupId>-->
+            <!--<artifactId>jboss-logging</artifactId>-->
+            <!--<version>3.3.0.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>javax.validation</groupId>-->
+            <!--<artifactId>validation-api</artifactId>-->
+            <!--<version>1.1.0.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.xbean</groupId>-->
+            <!--<artifactId>xbean-spring</artifactId>-->
+            <!--<version>4.5</version>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <profiles>
+        <!--开发环境-->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <mysql-url>rm-bp1lq6pymr2oy9kh1o.mysql.rds.aliyuncs.com</mysql-url>
+                <mysql-readonly-url>rm-bp1lq6pymr2oy9kh1o.mysql.rds.aliyuncs.com</mysql-readonly-url>
+                <mysql-user>exptest</mysql-user>
+                <mysql-password>#@#Exptest</mysql-password>
+             <!--   <mysql-database>exp-qat</mysql-database>
+
+                <oss-bucketName>exp-prod</oss-bucketName>-->
+                <mysql-database>exp-dev</mysql-database>
+                <oss-bucketName>exp-dev</oss-bucketName>
+                <!--<orm-hibernate-datasource>p6DataSourceForHibernate</orm-hibernate-datasource>-->
+                <!--<orm-hibernate-datasource-readonly>p6DataSourceForHibernateReadonly</orm-hibernate-datasource-readonly>-->
+                <!--<orm-mybatis-datasource>p6DataSourceForMybatis</orm-mybatis-datasource>-->
+                <!--<orm-mybatis-datasource-readonly>p6DataSourceForMybatisReadonly</orm-mybatis-datasource-readonly>-->
+
+                <orm-hibernate-datasource>druidDataSourceForHibernate</orm-hibernate-datasource>
+                <orm-hibernate-datasource-readonly>druidDataSourceForHibernateReadonly</orm-hibernate-datasource-readonly>
+                <orm-mybatis-datasource>druidDataSourceForMybatis</orm-mybatis-datasource>
+                <orm-mybatis-datasource-readonly>druidDataSourceForMybatisReadonly</orm-mybatis-datasource-readonly>
+
+                <redis-host>47.97.187.92</redis-host>
+                <redis-port>6379</redis-port>
+                <redis-password>kaa426</redis-password>
+
+                <mongo-host1>115.28.185.29</mongo-host1>
+                <mongo-port1>27018</mongo-port1>
+                <mongo-host2></mongo-host2>
+                <mongo-port2></mongo-port2>
+                <mongo-database>yanry_dev</mongo-database>
+                <mongo-user>admin</mongo-user>
+                <mongo-password>solution</mongo-password>
+
+                <fdfs-host>115.28.185.29</fdfs-host>
+
+
+                <wx-openid>clients.jjsongda.com</wx-openid>
+                <wx-payAppid>wx079bba8222507669</wx-payAppid>
+                <wx-payAppSecret>3b36e1afb6e0d721934c00b1a8dba703</wx-payAppSecret>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!--测试环境-->
+        <profile>
+            <id>test</id>
+            <properties>
+                <mysql-url>rm-bp1lq6pymr2oy9kh1o.mysql.rds.aliyuncs.com</mysql-url>
+                <mysql-readonly-url>rm-bp1lq6pymr2oy9kh1o.mysql.rds.aliyuncs.com</mysql-readonly-url>
+                <mysql-user>exptest</mysql-user>
+                <mysql-password>#@#Exptest</mysql-password>
+                <mysql-database>exp-qat</mysql-database>
+
+                <oss-bucketName>exp-test</oss-bucketName>
+
+               <!-- <orm-hibernate-datasource>p6DataSourceForHibernate</orm-hibernate-datasource>
+                <orm-hibernate-datasource-readonly>p6DataSourceForHibernateReadonly</orm-hibernate-datasource-readonly>
+                <orm-mybatis-datasource>p6DataSourceForMybatis</orm-mybatis-datasource>
+                <orm-mybatis-datasource-readonly>p6DataSourceForMybatisReadonly</orm-mybatis-datasource-readonly>-->
+
+                <orm-hibernate-datasource>druidDataSourceForHibernate</orm-hibernate-datasource>
+                <orm-hibernate-datasource-readonly>druidDataSourceForHibernateReadonly</orm-hibernate-datasource-readonly>
+                <orm-mybatis-datasource>druidDataSourceForMybatis</orm-mybatis-datasource>
+                <orm-mybatis-datasource-readonly>druidDataSourceForMybatisReadonly</orm-mybatis-datasource-readonly>
+
+                <!--<redis-host>r-bp1980580e5b4df4.redis.rds.aliyuncs.com</redis-host>-->
+                <!--<redis-port>6379</redis-port>-->
+                <!--<redis-password>Kaaredis426</redis-password>-->
+
+                <redis-host>47.97.187.92</redis-host>
+                <redis-port>6379</redis-port>
+                <redis-password>kaa426</redis-password>
+
+
+                <mongo-host1>115.28.185.29</mongo-host1>
+                <mongo-port1>27018</mongo-port1>
+                <mongo-host2></mongo-host2>
+                <mongo-port2></mongo-port2>
+                <mongo-database>yanry_test</mongo-database>
+                <mongo-user>admin</mongo-user>
+                <mongo-password>solution</mongo-password>
+
+                <fdfs-host>115.28.185.29</fdfs-host>
+
+
+                <wx-openid>clients.jjsongda.com</wx-openid>
+                <wx-payAppid>wx079bba8222507669</wx-payAppid>
+                <wx-payAppSecret>3b36e1afb6e0d721934c00b1a8dba703</wx-payAppSecret>
+
+            </properties>
+        </profile>
+        <!--生产环境-->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <mysql-url>rm-bp1lq6pymr2oy9kh1o.mysql.rds.aliyuncs.com</mysql-url>
+                <mysql-readonly-url>rm-bp1lq6pymr2oy9kh1o.mysql.rds.aliyuncs.com</mysql-readonly-url>
+                <mysql-user>exptest</mysql-user>
+                <mysql-password>#@#Exptest</mysql-password>
+                <mysql-database>exp-qat</mysql-database>
+
+                <oss-bucketName>exp-prod</oss-bucketName>
+
+                <!--<orm-hibernate-datasource>p6DataSourceForHibernate</orm-hibernate-datasource>
+                <orm-hibernate-datasource-readonly>p6DataSourceForHibernateReadonly</orm-hibernate-datasource-readonly>
+                <orm-mybatis-datasource>p6DataSourceForMybatis</orm-mybatis-datasource>
+                <orm-mybatis-datasource-readonly>p6DataSourceForMybatisReadonly</orm-mybatis-datasource-readonly>-->
+
+                <orm-hibernate-datasource>druidDataSourceForHibernate</orm-hibernate-datasource>
+                <orm-hibernate-datasource-readonly>druidDataSourceForHibernateReadonly</orm-hibernate-datasource-readonly>
+                <orm-mybatis-datasource>druidDataSourceForMybatis</orm-mybatis-datasource>
+                <orm-mybatis-datasource-readonly>druidDataSourceForMybatisReadonly</orm-mybatis-datasource-readonly>
+
+                <redis-host>47.97.187.92</redis-host>
+                <redis-port>6379</redis-port>
+                <redis-password>kaa426</redis-password>
+
+                <mongo-host1>dds-m5e85659cf218da41.mongodb.rds.aliyuncs.com</mongo-host1>
+                <mongo-port1>3717</mongo-port1>
+                <mongo-host2>dds-m5e85659cf218da42.mongodb.rds.aliyuncs.com</mongo-host2>
+                <mongo-port2>3717</mongo-port2>
+                <mongo-database>yanry</mongo-database>
+                <mongo-user>root</mongo-user>
+                <mongo-password>solution</mongo-password>
+
+                <fdfs-host>115.28.185.29</fdfs-host>
+
+
+                <wx-openid>clients.jjsongda.com</wx-openid>
+                <wx-payAppid>wxfa99f7a3998dfbac</wx-payAppid>
+                <wx-payAppSecret>b6592949ecef11172a39a00907f5c204</wx-payAppSecret>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>express_core</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <includeEmptyDirs>true</includeEmptyDirs>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources/filter/</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+</project>

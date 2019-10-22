@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>express</artifactId>
+        <groupId>com.express</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>express_pay</artifactId>
+    <!--<packaging>war</packaging>-->
+    <name>express_pay Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+
+    <build>
+        <finalName>express_pay</finalName>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alipay.api</groupId>
+            <artifactId>alipay_api</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>express_model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+
+
+
+</project>

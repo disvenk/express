@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>派件上门</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/myGetOrder.css" />
+</head>
+<body>
+<div class="container" style="padding: 12px;color: #666;font-size: 15px;margin-bottom: 1.3rem">
+    <div class="my-order">快递单号 <span class="order-info" id="deliveryNum"></span></div>
+    <div class="my-order">快递公司 <span class="order-info" id="deliveryCom"></span></div>
+    <iframe src="" id="iframe" frameborder="0"></iframe>
+    <p style="color: #0ab5fa;margin: 12px 0">派件上门信息</p>
+<div class="postAddress" style="background-color: #ffffff;padding: 12px">
+    <div class="post_list">
+        <div><span>收货人：</span><span id="receiveName"></span></div>
+        <div><span>电话：</span><span id="receiveTel"></span></div>
+        <div style="margin-bottom: -25px;"><span style="display: inline-block;width: 47px">地址：</span><div style="position: relative;left: 47px;top: -23px;width: calc(100% - 47px)" id="receiveAddress"></div></div>
+    </div>
+</div>
+<div class="postAddress" style="background-color: #ffffff;padding: 12px;margin-top: 13px;line-height: 25px;margin-bottom: 30px">
+    <div class="list_type clearfix mt-5" style="padding: 8px 0;border-bottom: 1px solid #f8f8f8;border-top: 1px solid #f8f8f8">
+        上门时间： <input style="height: 24px;float: right;border: none;font-size: 14px;border-radius: 6px;outline: 0;width: 65%;padding: 0 6px;text-align: right" type="text" id="showArea" placeholder="请选择取件时间" readonly>
+    </div>
+    <div class="tips" style="margin-top: 5px">
+        备注<br>
+        <div id="remarks" style="padding: 6px 0;font-size: 14px;border: none"></div>
+    </div>
+</div>
+    <div class="my-order">订单编号： <span class="order-info" id="orderNo"></span><span style="float: right;color: red" class="order-info" id="status"></span></div>
+    <div class="my-order">下单时间： <span class="order-info" id="orderTime"></span></div>
+    <div class="my-order">到达时间： <span class="order-info" id="toDate"></span></div>
+    <div class="my-order">支付时间： <span class="order-info" id="payTime"></span></div>
+    <div class="my-order" style="margin-top: 23px">验证码： <span class="order-info" id="code"></span></div>
+    <div class="my-order" id="signtTime"></div>
+    <div class="my-order" id="xiaoGe"></div>
+    <div class="my-order" id="xiaoGeTel"></div>
+    <div style="display: none;color: #fe0000;font-size: 13px;margin-top: 25px" id="tip" class="my-order"></div>
+</div>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script type="text/javascript" src="../assets/js/homePage/myTakeOrder.js"></script>
+</body>
+</html>

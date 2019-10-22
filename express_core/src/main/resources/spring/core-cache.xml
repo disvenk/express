@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.pool.maxTotal}"></property>
+        <property name="maxIdle" value="${redis.pool.maxIdle}"></property>
+        <property name="minIdle" value="${redis.pool.minIdle}"></property>
+        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}"></property>
+        <property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}"></property>
+        <property name="numTestsPerEvictionRun" value="${redis.pool.numTestsPerEvictionRun}"></property>
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.pool.timeBetweenEvictionRunsMillis}"></property>
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"></property>
+        <property name="testOnReturn" value="${redis.pool.testOnReturn}"></property>
+        <property name="testWhileIdle" value="${redis.pool.testWhileIdle}"></property>
+    </bean>
+
+    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.timeout}" type="int"/>
+        <constructor-arg index="4" value="${redis.password}"/>
+    </bean>
+
+    <!--非哨兵版分片连接池-->
+    <!--<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" scope="singleton">-->
+        <!--<constructor-arg index="0" ref="jedisPoolConfig"/>-->
+        <!--<constructor-arg index="1">-->
+            <!--<list>-->
+                <!--<bean name="master1" class="redis.clients.jedis.JedisShardInfo">-->
+                    <!--<constructor-arg index="0" value="${redis.master.host1}"/>-->
+                    <!--<constructor-arg index="1" value="${redis.master.port1}" type="int"/>-->
+                    <!--<property name="password" value="${redis.password}" />-->
+                <!--</bean>-->
+                <!--&lt;!&ndash;<bean name="slaver1" class="redis.clients.jedis.JedisShardInfo">&ndash;&gt;-->
+                <!--&lt;!&ndash;<constructor-arg index="0" value="${redis.slaver.host1}"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<constructor-arg index="1" value="${redis.slaver.port1}" type="int"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<property name="password" value="${redis.password}" />&ndash;&gt;-->
+                <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+            <!--</list>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+
+    <!--哨兵版分片连接池（订阅得独立部署，不能与web一起发布）-->
+    <!--<bean id="shardedJedisSentinelPool" class="com.cache.ShardedJedisSentinelPool" scope="singleton">-->
+    <!--<constructor-arg index="0">-->
+    <!--<list>-->
+    <!--<value>${redis.sentinel.master1}</value>-->
+    <!--<value>${redis.sentinel.master2}</value>-->
+    <!--</list>-->
+    <!--</constructor-arg>-->
+    <!--<constructor-arg index="1">-->
+    <!--<set>-->
+    <!--<value>${redis.sentinel.ip1}</value>-->
+    <!--<value>${redis.sentinel.ip2}</value>-->
+    <!--</set>-->
+    <!--</constructor-arg>-->
+    <!--<constructor-arg index="2" ref="jedisPoolConfig"/>-->
+    <!--<constructor-arg index="3" value="${redis.password}" />-->
+    <!--</bean>-->
+
+    <bean id="redisStoreExpire" class="java.lang.Integer">
+        <constructor-arg value="${redis.store.expire}"/>
+    </bean>
+    <bean id="redisQueryExpire" class="java.lang.Integer">
+        <constructor-arg value="${redis.query.expire}"/>
+    </bean>
+
+
+    <!-- TODO 缓存开启 -->
+
+    <!--&lt;!&ndash;<tx:annotation-driven transaction-manager="springHibernateTransactionManager"/>&ndash;&gt;-->
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+    <!--<bean id="cacheManagerEhcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+        <!--<property name="configLocation">-->
+            <!--<value>classpath:ehcache.xml</value>-->
+        <!--</property>-->
+        <!--<property name="shared" value="true"/>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;spring-cache 集成 redis&ndash;&gt;-->
+    <!--<bean id="redisCacheManager" class="com.shiyu.core.cache.RedisCacheManager" >-->
+        <!--<constructor-arg index="0" ref="redisQueryExpire"/>-->
+    <!--</bean>-->
+    <!--<cache:annotation-driven cache-manager="cacheManager" mode="proxy" proxy-target-class="false" key-generator="customKeyGenerator"/>-->
+    <!--<bean id="customKeyGenerator" class="com.shiyu.core.cache.CustomKeyGenerator" />-->
+    <!--<bean id="cacheManager" class="org.springframework.cache.support.CompositeCacheManager">-->
+        <!--<property name="cacheManagers">-->
+            <!--<list>-->
+                <!--<ref bean="redisCacheManager"/>-->
+                <!--&lt;!&ndash;<ref bean="memcachedCacheManager"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<ref bean="ehcacheManager"/>&ndash;&gt;-->
+            <!--</list>-->
+        <!--</property>-->
+        <!--<property name="fallbackToNoOpCache" value="true"/>-->
+    <!--</bean>-->
+</beans>

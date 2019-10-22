@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>网点编辑</title>
+    <link rel="stylesheet" href="../assets/layui/frame/layui/css/layui.css">
+    <link rel="stylesheet" href="../assets/layui/frame/static/css/style.css">
+    <link rel="icon" href="../assets/layui/frame/static/image/code.png">
+</head>
+<style type="text/css">
+    .layui-form-item {
+        padding-left: 60px;
+    }
+    .layui-form-label {
+        text-align: left;
+        width: 114px;
+    }
+    .layui-form-item .layui-input-inline {
+        width: 300px;
+    }
+
+    tbody tr {
+        height: 40px;
+    }
+    tbody td {
+        padding-left: 6px;
+    }
+    input[type=number] {
+        height: 28px;
+    }
+</style>
+<body class="body">
+<p class="layui-elem-quote">当前位置：网点编辑</p>
+<button class="layui-btn layui-btn-normal" onclick="history.go(-1)">返回</button>
+<form class="layui-form" action="" style="padding-left: 20%;">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">网点</label>
+            <div class="layui-input-inline">
+                <input name="school" id="school" lay-verify="required：false" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">取件地址</label>
+            <div class="layui-input-inline">
+                <input name="school" id="takedAddress" lay-verify="required：false" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+        <label class="layui-form-label">面单拍照</label>
+        <div class="layui-input-inline" id="isNot">
+            <input type="radio" name="yes" value="是" title="是">
+            <input type="radio" name="yes" value="否" title="否" >
+        </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+        <label class="layui-form-label">面单</label>
+        <div class="layui-input-inline" id="ispaper">
+            <input name="sex" value="电子面单" title="电子面单" type="radio">
+            <input name="sex" value="纸质面单" title="纸质面单" type="radio">
+        </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">派件上门时间维护</label>
+                <table id="simpleTable" >
+                    <tbody id="tbody">
+
+                    </tbody>
+                </table>
+                <button class="layui-btn layui-btn-sm" id="addBtn">添加</button>
+            </div>
+    </div>
+    <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">上门取件时间维护</label>
+                <table id="simpleTable1" >
+                    <tbody id="tbody1">
+
+                    </tbody>
+                </table>
+                <button class="layui-btn layui-btn-sm" id="addBtn1">添加</button>
+            </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="padding-left: 20%;">
+            <button class="layui-btn" lay-submit="" lay-filter="formDemo">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" src="../assets/layui/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="../assets/layui/frame/layui/layui.js"></script>
+<script type="text/javascript" src="../assets/js/branchManage/branchManageEdit.js"></script>
+
+</body>
+</html>

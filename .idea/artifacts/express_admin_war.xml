@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="express_admin:war">
+    <output-path>$PROJECT_DIR$/express_admin/target</output-path>
+    <root id="archive" name="express_admin.war">
+      <element id="artifact" artifact-name="express_admin:war exploded" />
+    </root>
+  </artifact>
+</component>

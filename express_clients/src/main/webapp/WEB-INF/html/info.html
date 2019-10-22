@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>个人中心</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/info.css" />
+</head>
+<body>
+<div class="container">
+    <div class="weui-mask" id="iosMask" style="display: none"></div>
+    <div id="personalCenter">
+        <div id="header">
+            <div class="header_img"><img id="icon" src="../assets/images/errorPerson.jpg"  onerror="this.src='../assets/images/errorPerson.jpg'" alt=""></div>
+            <div class="header_text">
+                <div style="font-size: 15px;text-align: center;margin-bottom: 0.3rem"><span id="nickName" style="font-size: 13px;color: #ffffff">我的头像</span></div>
+            </div>
+            <!--个人信息设置-->
+            <a id="setting" href="../homePage/settingHtml">
+                <img style="width: 100%;height: 100%;" src="../assets/images/setting.png" alt="">
+            </a>
+        </div>
+        <div class="weui-panel" style="margin-top: 12px">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_small-appmsg">
+                    <div class="weui-cells">
+                        <a class="weui-cell weui-cell_access" href="../homePage/receiveOrderHtml">
+                            <div class="weui-cell__hd"><img src="../assets/images/receiveDD.png" alt=""
+                                                            style="width:22px;margin-right:10px;display:block"></div>
+                            <div class="weui-cell__bd weui-cell_primary">
+                                <p><span style="color: #2a2e37">收件订单</span><!--<span style="float: right;color: #AF905C">共$!{subscripts.rechargeCount}张</span>--></p>
+                            </div>
+                            <span class="weui-cell__ft  "></span>
+                        </a>
+                        <a class="weui-cell weui-cell_access" href="../homePage/sendOrderHtml">
+                            <div class="weui-cell__hd"><img src="../assets/images/postDD.png" alt=""
+                                                            style="width:22px;margin-right:10px;display:block"></div>
+                            <div class="weui-cell__bd weui-cell_primary">
+                                <p><span style="color: #2a2e37">寄件订单</span><!--<span style="float: right;color: #AF905C">共$!{subscripts.packageCount}张</span>--></p>
+                            </div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                        <a class="weui-cell weui-cell_access" href="../homePage/addressListHtml">
+                            <div class="weui-cell__hd"><img src="../assets/images/address.png" alt=""
+                                                            style="width:22px;margin-right:10px;display:block"></div>
+                            <div class="weui-cell__bd weui-cell_primary">
+                                <p><span style="color: #2a2e37">我的地址</span><!--<span style="float: right;color: #AF905C">共$!{subscripts.packageCount}张</span>--></p>
+                            </div>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                        <a class="weui-cell weui-cell_access" style="position: relative;padding: 17px 15px">
+                            <div class="weui-cell__hd"><img src="../assets/images/contact.png" alt=""
+                                                            style="width:22px;margin-right:10px;display:block"></div>
+                               <a href="tel:18817590885" style="display: inline;position: absolute;left: 47px;bottom: 15px;color: #2a2e37">联系客服</a>
+                            <span class="weui-cell__ft"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script>
+    $.ajax({
+        type: "POST",
+        url: "../account/loginInfo",
+        contentType: "application/json; charset=utf-8",
+        headers: {
+            "Accept": "application/json; charset=utf-8",
+            "Authorization": "Basic " + sessionStorage .getItem("token")
+        },
+        success: function (res) {
+            if(res.stateCode == 100){
+                $('#nickName').html(res.data.nickName);
+                $('#icon').attr('src', res.data.icon);
+            }else{
+                layer.msg(res.message);
+            }
+        },
+        error: function (err) {
+            layer.msg(err.message);
+        }
+    });
+
+</script>
+</body>
+</html>

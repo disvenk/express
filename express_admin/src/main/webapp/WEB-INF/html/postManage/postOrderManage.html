@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>寄件订单</title>
+    <link rel="stylesheet" href="../assets/layui/frame/layui/css/layui.css">
+    <link rel="stylesheet" href="../assets/layui/frame/static/css/style.css">
+    <link rel="icon" href="../assets/layui/frame/static/image/code.png">
+</head>
+<style type="text/css">
+    .info-span {
+        width: 12%;
+        display: inline-block;
+    }
+</style>
+<body class="body">
+<p class="layui-elem-quote">当前位置：寄件订单列表</p>
+<p class="layui-elem-quote" style="border-left: 0">
+    <span class="info-span">订单数：<span class="blue-text" id="totalQty"></span>件</span>
+    <span class="info-span">上门取件：<span class="blue-text" id="todoorQtyTotal"></span>件</span>
+    <span class="info-span">上门费：<span class="blue-text" id="todoorFeeTotal"></span>元</span>
+    <span class="info-span">快递费：<span class="blue-text" id="todoorPriceTotal"></span>元</span>
+    <span class="info-span">成本：<span class="blue-text" id="toodoorCostTotal"></span>元</span>
+    <span class="info-span">自行寄件：<span class="blue-text" id="sendQty"></span>件</span>
+    <span class="info-span">快递费：<span class="blue-text" id="priceTotal"></span>元</span>
+    <span class="info-span">成本：<span class="blue-text" id="costTotal"></span>元</span>
+</p>
+<!-- 工具集 -->
+<div class="my-btn-box">
+     <span class="fl">
+
+    </span>
+    <span class="fr">
+        <form class="layui-form" action="">
+            <label class="layui-form-label">所属网点：</label>
+            <div class="layui-input-inline">
+                <select id="schoolId" name="modules" lay-verify="required:false" lay-search="">
+
+                </select>
+            </div>
+
+            <span class="layui-form-label">订单号：</span>
+            <div class="layui-input-inline">
+               <input type="number" id="orderNo" autocomplete="off" placeholder="请输入订单号" class="layui-input">
+            </div>
+
+            <span class="layui-form-label">手机号：</span>
+            <div class="layui-input-inline">
+               <input type="number" id="userMobile" autocomplete="off" placeholder="请输入手机号" class="layui-input">
+            </div>
+            <span class="layui-form-label">用户名：</span>
+            <div class="layui-input-inline" style="width: 170px;">
+                <input type="text" id="userCode" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+            </div>
+            <label class="layui-form-label">是否删除：</label>
+            <div class="layui-input-inline" style="width: 152px;">
+                <select id="isDelete" name="modules" lay-verify="required:false" lay-search="">
+                <option value=""></option>
+                <option value="已删除">已删除</option>
+                <option value="未删除">未删除</option>
+                </select>
+            </div>
+
+        </form>
+    </span>
+
+</div>
+<div class="my-btn-box">
+    <span class="fr">
+        <form class="layui-form" action="">
+            <label class="layui-form-label">寄件方式：</label>
+            <div class="layui-input-inline">
+                <select id="typeName" name="modules" lay-verify="required:false" lay-search="">
+                  <option value=""></option>
+                  <option value="上门取件">上门取件</option>
+                  <option value="自行寄件">自行寄件</option>
+                </select>
+            </div>
+
+            <span class="layui-form-label">快递单号：</span>
+            <div class="layui-input-inline">
+               <input type="number" id="deliveryNo" autocomplete="off" placeholder="快递单号" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">订单状态：</label>
+            <div class="layui-input-inline">
+                <select id="orderStatus" name="modules" lay-verify="required:false" lay-search="">
+                  <option value=""></option>
+                  <option id="1" value="待取件">待取件</option>
+                  <option id="2" value="已取件">已取件</option>
+                  <option id="3" value="已支付">已支付</option>
+                  <option id="4" value="已取消">已取消</option>
+                </select>
+            </div>
+            <label class="layui-form-label">下单时间：</label>
+            <div class="layui-input-inline" style="width: 170px;">
+              <input type="text" class="layui-input" id="getDateRange" placeholder="请选择日期">
+            </div>
+            <button class="layui-btn mgl-20" lay-submit="" lay-filter="formDemo">搜索</button>
+            <button class="layui-btn layui-btn-warm mgl-20" lay-submit="" lay-filter="formExport">导出</button>
+            <button class="layui-btn layui-btn-normal mgl-20">重置</button>
+        </form>
+    </span>
+</div>
+
+<!-- 表格 -->
+<table class="layui-table" id="dateTable" lay-filter="dateTable"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/javascript" src="../assets/layui/frame/layui/layui.js"></script>
+<script type="text/javascript" src="../assets/layui/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="../assets/layui/js/index.js"></script>
+<script type="text/javascript" src="../assets/js/postManage/postOrderManage.js"></script>
+</body>
+</html>

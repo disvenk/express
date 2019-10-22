@@ -1,0 +1,27 @@
+body{
+    font-family:Helvetica;
+    margin:0;
+    padding:0;
+    background-color: #f6f6f6;
+    font-size: 14px;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.weui-cell{
+    padding: 15px;
+}
+.weui-cell__bd{
+    font-size: 14px;
+}
+.picker .picker-panel .wheel-wrapper .wheel .wheel-scroll .wheel-item{
+    font-size: 14px !important;
+}
+.picker-title{
+    font-size: 16px !important;
+}
+.layui-layer-loading{
+    left: calc(50vw - 16px) !important;
+    top: calc(50vh - 16px) !important;
+}

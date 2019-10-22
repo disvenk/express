@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!--<meta name="format-detection" content="telephone=no">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>我要寄件</title>
+    <!--<script src="../assets/js/jquery-1.10.1.js"></script>-->
+    <link rel="stylesheet" href="../assets/css/weui.css" />
+    <link rel="stylesheet" href="../assets/css/zepto.mtimer.css" />
+    <link rel="stylesheet" href="../assets/css//homePage/common.css" />
+    <link rel="stylesheet" href="../assets/css/homePage/post.css" />
+</head>
+<body>
+<div class="container">
+    <div class="weui-mask" id="iosMask" style="display: none"></div>
+    <div class="list">
+        <div class="list_title">信息维护</div>
+        <div class="list_type clearfix">
+            寄件方式
+            <select id="deliveryWay" class="select-choice">
+                <option value="" disabled selected style="display: none">--请选择--</option>
+                <option value="1">上门取件</option>
+                <option value="0">自行寄件</option>
+            </select>
+        </div>
+        <div class="postAddress" id="receiveAddress">
+            <div class="list_title" style="padding: 0">收件地址</div>
+            <!--<div class="post_list">-->
+                <!--<div><span>寄件人：</span><span>娃儿饿</span></div>-->
+                <!--<div><span>电话：</span><span>12312312312</span></div>-->
+                <!--<div><span style="display: inline-block;width: 42px">地址：</span><div style="position: relative;left: 42px;top: -21px;width: calc(100% - 42px)">受到水电费是的根深蒂固但是风格水电费更好的身份和豆腐花豆腐花豆腐花是豆腐花的豆腐花好</div></div>-->
+            <!--</div>-->
+            <div class="add-address" id="addReceive" style="display: none">
+                <img src="../assets/images/add_icon.png" alt="">新增收件地址
+            </div>
+        </div>
+        <div class="postAddress mt4" id="postAddress">
+            <div class="list_title" style="padding: 0">寄件地址</div>
+            <div class="add-address" id="addPost" style="display: none">
+                <img src="../assets/images/add_icon.png" alt="">新增寄件地址
+            </div>
+        </div>
+        <div class="list_type clearfix">
+            <div class="select-wrap">
+                物品类型
+                <select class="select-choice" id="type">
+                </select>
+            </div>
+        </div>
+        <div class="list_type clearfix mt-5">
+            <div class="select-wrap">
+                快递公司
+                <select class="select-choice" id="deliveryCom">
+
+                </select>
+            </div>
+        </div>
+        <div class="list_type clearfix mt-5" id="time">
+            寄件时间<input style="float: right;text-align: right;height: 43px;border: 0;outline: 0;width: 73%" type="text" id="showArea" placeholder="请选择寄件时间" readonly>
+        </div>
+        <div class="tips">
+            备注<br>
+            <textarea class="tips-textarea" placeholder="请输入备注信息"></textarea>
+        </div>
+
+    </div>
+    <div class="weui-dialog__ft">
+        <div id="sure">确认订单</div>
+    </div>
+
+</div>
+<!--新增收件地址模态框中的列表-->
+<div class="modal-address-list">
+    <div id="list" style="margin-bottom: 100px;"></div>
+    <div class="add-address-list">新增</div>
+</div>
+<!--新增寄件地址模态框中的列表-->
+<div class="modal-address-list1">
+    <div id="list1" style="margin-bottom: 100px;"></div>
+    <div class="add-address-list1">新增</div>
+</div>
+<!--新增模态窗里面的新增地址-->
+<div class="more-address">
+    <div class="container">
+        <div class="weui-panel" style="color: #313131;">
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_small-appmsg">
+                    <div class="weui-cells" style="background-color: #f8f8f8">
+                        <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                            <div class="weui-cell__bd weui-cell_primary">
+                                <span id="receiver">收件人</span><div style="display: inline-block;float: right;width: 70%"><input id="name" type="text" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请输入姓名"></div>
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                            <div class="weui-cell__bd weui-cell_primary">
+                                手机号<div style="display: inline-block;float: right;width: 70%"><input id="phone" type="tel" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请输入手机号"></div>
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                            <div class="weui-cell__bd weui-cell_primary">
+                                省市区<div style="display: inline-block;float: right;width: 70%"><input id="province" type="text" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请选择省市区" readonly></div>
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_access" style="background-color: #fff">
+                            <div class="weui-cell__bd weui-cell_primary">
+                                详细地址<div style="display: inline-block;float: right;width: 70%"><input id="address" type="text" style="width: 100%;font-size: 14px;border: none;padding: 3px 0;outline: none;" placeholder="请输入详细地址"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%;position: fixed;bottom: 0;background-color: #fff;z-index: 100;padding: 5px 0">
+        <a id="save" style="display: block;width: 92%;height: 3.1rem;line-height: 3.1rem;text-align: center;color: #fff;background-color: #2aade5;;margin-left: 4%;border-radius: 6px">保存</a>
+    </div>
+</div>
+<!--提示-->
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../assets/js/zepto.js"></script>
+<script type="text/javascript" src="../assets/js/zepto.mtimer.js"></script>
+<script type="text/javascript" src="../assets/js/layer/layer.js"></script>
+<script type="text/javascript" src="../assets/js/picker.min.js"></script>
+<script type="text/javascript" src="../assets/js/homePage/post.js"></script>
+<script>
+    $('.delBtn').click(function(){
+        if($(this).find('img').attr('src')=='./selectAddress/noCheckItem.png'){
+            $(this).find('img').attr('src','./selectAddress/checkedItem.png');
+            $("#default").val(1);
+        }else{
+            $(this).find('img').attr('src','./selectAddress/noCheckItem.png');
+            $("#default").val(0);
+        }
+    });
+
+    $("#headerRBtn").click(function(){
+        $(".form").submit();
+    })
+
+</script>
+</body>
+</html>

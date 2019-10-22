@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <context:component-scan base-package="com.xxx.*.controller"/>
+
+    <!-- 配置数据转换服务 -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.xxx.core.converters.DateConverter"></bean>
+                <bean class="com.xxx.core.converters.TimestampConverter"></bean>
+            </set>
+        </property>
+    </bean>
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+    <!-- 配置数据绑定, 依赖数据转换服务进行绑定 -->
+    <bean id="webBindingInitializer" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+        <property name="conversionService" ref="conversionService"/>
+    </bean>
+
+    <!-- 配置HTTP消息转换器 -->
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg value="utf-8"/>
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=utf-8</value>
+                <value>application/xml;charset=utf-8</value>
+                <value>application/json;charset=utf-8</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter" />
+
+    <!-- RequestMappingHandlerAdapter 负责处理请求参数到处理方法参数的绑定以及数据类型转换等工作 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer" ref="webBindingInitializer"/>
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringHttpMessageConverter"/>
+                <ref bean="fastJsonHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="integrateExceptionHandler"  class="com.xxx.core.handlers.IntegrateExceptionHandler" ></bean>
+
+    <!-- 加载静态资源 -->
+    <mvc:default-servlet-handler />
+    <mvc:annotation-driven />
+
+<!--    &lt;!&ndash; 内部视图解析器，JSP与JSTL模板 &ndash;&gt;
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+            id="internalResourceViewResolver">
+        &lt;!&ndash;指定视图渲染类 &ndash;&gt;
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+        &lt;!&ndash;自动添加到路径中的前缀 &ndash;&gt;
+        &lt;!&ndash;<property name="prefix" value="/WEB-INF/" />&ndash;&gt;
+        &lt;!&ndash;自动添加到路径中的后缀 &ndash;&gt;
+        <property name="suffix" value=".html" />
+        &lt;!&ndash;设置所有视图的内容类型，如果视图本身设置内容类型视图类可以忽略 &ndash;&gt;
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        &lt;!&ndash; 优先级，越小越前 &ndash;&gt;
+        <property name="order" value="2" />
+    </bean>
+
+    &lt;!&ndash; FreeMarker视图解析器与属性配置 &ndash;&gt;
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        &lt;!&ndash;是否启用缓存 &ndash;&gt;
+        <property name="cache" value="true" />
+        &lt;!&ndash;自动添加到路径中的前缀 &ndash;&gt;
+        <property name="prefix" value="" />
+        &lt;!&ndash;自动添加到路径中的后缀 &ndash;&gt;
+        <property name="suffix" value=".html" />
+        &lt;!&ndash;指定视图渲染类 &ndash;&gt;
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        &lt;!&ndash; 设置是否暴露Spring的macro辅助类库，默认为true &ndash;&gt;
+        <property name="exposeSpringMacroHelpers" value="true" />
+        &lt;!&ndash; 是否应将所有request属性添加到与模板合并之前的模型。默认为false。 &ndash;&gt;
+        <property name="exposeRequestAttributes" value="true" />
+        &lt;!&ndash; 是否应将所有session属性添加到与模板合并之前的模型。默认为false。 &ndash;&gt;
+        <property name="exposeSessionAttributes" value="true" />
+        &lt;!&ndash; 在页面中使用${rc.contextPath}就可获得contextPath &ndash;&gt;
+        <property name="requestContextAttribute" value="rc" />
+        &lt;!&ndash;设置所有视图的内容类型，如果视图本身设置内容类型视图类可以忽略 &ndash;&gt;
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        &lt;!&ndash; 优先级，越小越前 &ndash;&gt;
+        <property name="order" value="1" />
+    </bean>
+
+    &lt;!&ndash; 配置FreeMarker细节 &ndash;&gt;
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        &lt;!&ndash; 模板路径 &ndash;&gt;
+        <property name="templateLoaderPath" value="/WEB-INF/" />
+        <property name="freemarkerSettings">
+            <props>
+                &lt;!&ndash; 刷新模板的周期，单位为秒 &ndash;&gt;
+                <prop key="template_update_delay">5</prop>
+                &lt;!&ndash;模板的编码格式 &ndash;&gt;
+                <prop key="defaultEncoding">UTF-8</prop>
+                &lt;!&ndash;url编码格式 &ndash;&gt;
+                <prop key="url_escaping_charset">UTF-8</prop>
+                &lt;!&ndash;此属性可以防止模板解析空值时的错误 &ndash;&gt;
+                <prop key="classic_compatible">true</prop>
+                &lt;!&ndash;该模板所使用的国际化语言环境选项 &ndash;&gt;
+                <prop key="locale">zh_CN</prop>
+                &lt;!&ndash;布尔值格式 &ndash;&gt;
+                <prop key="boolean_format">true,false</prop>
+                &lt;!&ndash;日期时间格式 &ndash;&gt;
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                &lt;!&ndash;时间格式 &ndash;&gt;
+                <prop key="time_format">HH:mm:ss</prop>
+                &lt;!&ndash;数字格式 &ndash;&gt;
+                <prop key="number_format">0.######</prop>
+                &lt;!&ndash;自动开启/关闭空白移除，默认为true &ndash;&gt;
+                <prop key="whitespace_stripping">true</prop>
+            </props>
+        </property>
+    </bean>-->
+
+    <!-- velocity 配置 -->
+    <bean id="velocityConfig"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath">
+            <value>/WEB-INF/html/</value>
+        </property>
+
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+
+                <prop key="file.resource.loader.cache">false</prop>
+                <prop key="file.resource.loader.modificationCheckInterval">1</prop>
+                <prop key="velocimacro.library.autoreload">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="suffix" value=".html" />
+
+        <!-- 使用springMacro、使用servlet的对象 -->
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="requestContextAttribute" value="rc" />
+        <property name="dateToolAttribute" value="date" /><!--日期函数名称-->
+
+        <property name="contentType" value="text/html;charset=UTF-8" />
+    </bean>
+    <!-- velocity 配置 -->
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!--
+        最大150MB。指定所上传文件的最大值单位Byte。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和。
+        注意：用ajax提交时，如果超过5M，我发现会报500错误并返回html，此时html格式明显不是我们想要的。
+        -->
+        <property name="maxUploadSize" value="157286400"/>
+    </bean>
+</beans>

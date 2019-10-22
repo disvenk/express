@@ -1,0 +1,58 @@
+/*商品信息或者订单表格*/
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+  vertical-align: middle;
+  text-align: center;
+}
+
+.order-topic {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+}
+
+
+.sales-order-state {
+  height: 50px;
+}
+
+.order-info-wrap {
+  vertical-align: middle;
+  position: relative;
+}
+
+.sales-order-info {
+  display: inline-block;
+}
+
+.order-info-img {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-right: 14px;
+}
+
+.order-info-name {
+  width: 180px;
+  line-height: 22px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.order-info-desc {
+  position: absolute;
+  bottom: 6px;
+  width: 180px;
+  text-align: left;
+  color: grey;
+}
+
+.sales-order-operate:hover,
+.sales-order-operate a:hover
+{
+  color: #3c9ed8;
+}
+
+.sales-order-operate {
+  cursor: pointer;
+}

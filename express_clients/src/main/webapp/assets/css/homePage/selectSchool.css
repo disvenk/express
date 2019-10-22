@@ -1,0 +1,58 @@
+body{
+    font-family:Helvetica;
+    margin:0;
+    padding:0;
+    overflow: hidden;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    min-height: 100vh;
+    background:#05befe; /* 一些不支持背景渐变的浏览器 */
+    background:-moz-linear-gradient(top, rgb(34,190,250), rgb(65,123,214));
+    background:-webkit-gradient(linear, 0 0, 0 bottom, from(rgb(34,190,250)), to(rgb(65,123,214)));
+    background:-o-linear-gradient(top, rgb(34,190,250), rgb(65,123,214));
+}
+ #options{
+    margin-left: calc(50vw - 140px);
+}
+ select{
+     width: 280px;
+    font-size: 14px;
+     padding: 16px 20px;
+    background-color: rgb(57,164,233);
+    color: #ffffff;
+    outline: none;
+    border: 1px solid #3aaafc;
+     border-radius: 28px;
+     -webkit-appearance:none;
+     appearance:none;
+}
+ .note{
+    margin: 10px 0;
+    text-align: center;
+    color: #ffffff;
+    font-size: 13px;
+}
+ .logo{
+    text-align: center;
+     padding-top: 60px;
+}
+ .logo img{
+     width: 150px;
+}
+.login{
+    background-color: #ffffff;
+    color: #259df4;
+    font-size: 16px;
+    text-align: center;
+    width: 280px;
+    margin-left: calc(50vw - 140px);
+    border-radius: 28px;
+    height: 47px;
+    line-height: 47px;
+    margin-top: 36px;
+    font-weight: 600;
+}
