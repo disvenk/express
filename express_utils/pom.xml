@@ -124,7 +124,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>2.7</version>
         </dependency>
         <!--提供了对于JavaBean进行各种操作，克隆对象、属性等-->
         <dependency>
